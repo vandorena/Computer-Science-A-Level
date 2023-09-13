@@ -1,13 +1,22 @@
 import random
+import string
 def spacer():
     blanklines = 0 
     while blanklines != 6:
         print("")
         blanklines = blanklines +1
-def randomchargen():
-    
-def randomurlgenerator():
-    return(f"https://")
+def randomchargen(amountofchar):
+    charstring = ""
+    for i in range(0,amountofchar):
+        singlechar = random.choice(string.ascii_letters)
+        charstring = charstring + singlechar
+    return charstring
+def tldrandom():
+    randomnumber = random.randint(0,6)
+    tldlist = [".com",".org",".net", ".edu",".int",".gov",".mil"]
+    return tldlist[randomnumber]
+def randomurlgenerator(numberchar):
+    return(f"https://{randomchargen(numberchar)}{tldrandom()}")
 userchosenurls = False
 while userchosenurls == False:
     spacer()
@@ -17,6 +26,7 @@ while userchosenurls == False:
     print("For 1 000 000 URLs type 4")
     spacer()
     howmanyurls = int(input("Select Options: "))
+    howmanycharacters = int(input("How long do you want the URLs to be?: "))
     
     if howmanyurls == 1:
        urlcount = 200
@@ -36,6 +46,6 @@ while userchosenurls == False:
 urlcounter = 0
 with open ("URLlist.txt", "a") as targetfile:
     while urlcounter != urlcount:
-        targetfile.write("hello")
+        targetfile.write(randomurlgenerator(howmanycharacters))
         targetfile.write("\n")
         urlcounter = urlcounter +1

@@ -4,6 +4,10 @@ def spacer():
     while blanklines != 6:
         print("")
         blanklines = blanklines +1
+def randomchargen():
+    
+def randomurlgenerator():
+    return(f"https://")
 userchosenurls = False
 while userchosenurls == False:
     spacer()

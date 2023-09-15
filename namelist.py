@@ -31,7 +31,8 @@ for i in range(3):
 print(f"the third name is {name_list[2]}")
 print(f"The last seven names are: ")
 for i in range (0,7):
-    print(name_list.pop())
+   # print(name_list.pop())
+   print(name)
 numberlist = []
 for i in range(0,5):
     numberlist.append(int(input("Input a number")))

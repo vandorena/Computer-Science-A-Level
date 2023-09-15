@@ -24,7 +24,7 @@ def numbergennormal(yes):
     while iterationcount != 4:
         holdingnumber = random.randint(0,9)
         number.append(holdingnumber)
-        terationcount = iterationcount + 1
+        iterationcount = iterationcount + 1
     numberinstr = str(number[1]) + str(number[2]) + str(number[3]) + str(number[0])
     return numberinstr
 

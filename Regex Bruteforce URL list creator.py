@@ -24,9 +24,12 @@ while userchosenurls == False:
     print("for 1000 URLs type 2")
     print("for 300000 URLs type 3")
     print("For 1 000 000 URLs type 4")
+    print("For 100 000 000 URLs type 5")
     spacer()
     howmanyurls = int(input("Select Options: "))
+    spacer()
     howmanycharacters = int(input("How long do you want the URLs to be?: "))
+    spacer()
     
     if howmanyurls == 1:
        urlcount = 200
@@ -40,12 +43,19 @@ while userchosenurls == False:
     elif howmanyurls == 4:
         urlcount = 1000000
         userchosenurls = True
+    elif howmanyurls == 5:
+        urlcount = 100000000
+        userchosenurls = True
     else:
         print("please enter only 1,2,3 or 4")
 
+print("Working on it")
+spacer()
 urlcounter = 0
 with open ("URLlist.txt", "a") as targetfile:
     while urlcounter != urlcount:
         targetfile.write(randomurlgenerator(howmanycharacters))
         targetfile.write("\n")
         urlcounter = urlcounter +1
+print("Done")
+spacer()

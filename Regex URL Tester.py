@@ -1,4 +1,5 @@
 import re
+import requests
 
 
 #need to add a run for the regex url list maker
@@ -13,7 +14,16 @@ def urlcheck(url):
     urlformat = re.compile(r'(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?') 
     url = urlformat.search(url)
     return bool(url)
-
+def onlinecheck(url):
+    status = "Offline"
+    httpsrequest = requests.head(url)
+    if httpsrequest.status_code == 200:
+        status = "Online"
+    elif httpsrequest.status_code == 404:
+        status = "Offline"
+    else:
+        status = "Unkown"
+        
 url = input("Input your suggested url here: ")
 print(f"Your url is a {urlcheck(url)} url")
 endoffile = False
@@ -22,4 +32,6 @@ while endoffile == False:
     urlline = urlfile.readline()
     if not urlline:
         break
-    print(f"{urlline} is a {urlcheck(urlline)} url" )
+    thisurlonline = onlinecheck(urlline)
+    if thisurlonline == True:
+        print(f"{urlline} is a {urlcheck(urlline)} url and it's status is {onlinecheck(urlline)} " )

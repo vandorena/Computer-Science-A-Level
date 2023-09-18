@@ -1,4 +1,7 @@
 import datetime
+import sys as system
+import subprocess
+import os
 def spacer():
     for i in range(0,6):
         print("")
@@ -8,7 +11,8 @@ def userchoice():
     print("To choose to add a reminder enter 1")
     print("To view all reminders enter 2")
     print("To export all reminders enter 3")
-    print("To exit the program enter 4")
+    print("To remove a reminder enter 4")
+    print("To exit all programs enter 5")
     spacer()
     askuser = int(input("Please enter your choice here: "))
     return askuser
@@ -47,6 +51,34 @@ def taskset():
     tasklist = [tasktitle, taskdescription]
     return tasklist
 
+def shutdown():
+    os.system('shutdown /s /t 0')
+
+def exporter():
+    with open("Your Current Reminders.txt", "a") as exportedfile:
+        for i in range(0,len(todolist)):
+            exportedfile.write(todolist[i])
+            exportedfile.write("\n")
+    return
+
+def deleteitemlist():
+    print("Currently your to do list looks like this: ")
+    spacer()
+    print(todolist)
+    finisheddeleting = False
+    while finisheddeleting == False:
+        print("Please choose which element of the list you want to remove:")
+        spacer()
+        userchoiceremove = int(input("Enter Here")) - 1
+        todolist.remove(userchoiceremove)
+        print ("Do you have any more items to remove, if yes input y if no input n")
+        spacer()
+        moreremove = str(input("enter here: "))
+        if moreremove == "n":
+            finisheddeleting = True
+    return todolist
+
+
 todolist = []
 userinputtrue = False
 while userinputtrue == False:
@@ -61,3 +93,16 @@ while userinputtrue == False:
     elif userinput == 2:
         userinputtrue = True
         print(todolist)
+        userinputtrue = False
+    elif userinput == 5:
+        userinputtrue = True
+        shutdown()
+    elif userinput == 4:
+        userinputtrue = True
+        todolist = deleteitemlist()
+        userinputtrue = False
+    elif userinput == 3:
+        userinputtrue = True
+        exporter()
+        userinputtrue = False
+

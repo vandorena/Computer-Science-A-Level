@@ -21,7 +21,7 @@ for i in range(0,len(word_list)):
                 checker = checker + 1
             else:
                 checker = checker + 0
-            if checker == 0:
+            if checker == 0:                                                                                                                                                                                                                                                                                                                                      
                 checkednotinlist = True
     if checkednotinlist == True:
         testedword.append(holdword)

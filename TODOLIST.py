@@ -78,7 +78,7 @@ def deleteitemlist():
             finisheddeleting = True
     return todolist
 
-
+spare = []
 todolist = []
 userinputtrue = False
 while userinputtrue == False:

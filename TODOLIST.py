@@ -47,7 +47,7 @@ def taskset():
     tasktitle = input("Enter Here: ")
     print("What do you want the description of the task to be?")
     spacer()
-    taskdescription = input("Enter Here")
+    taskdescription = input("Enter Here: ")
     tasklist = [tasktitle, taskdescription]
     return tasklist
 
@@ -69,8 +69,8 @@ def deleteitemlist():
     while finisheddeleting == False:
         print("Please choose which element of the list you want to remove:")
         spacer()
-        userchoiceremove = int(input("Enter Here")) - 1
-        todolist.remove(userchoiceremove)
+        userchoiceremove = int(input("Enter Here: ")) - 1
+        todolist.remove(todolist[userchoiceremove])
         print ("Do you have any more items to remove, if yes input y if no input n")
         spacer()
         moreremove = str(input("enter here: "))

@@ -1,3 +1,5 @@
+import math
+
 class boatproperties:
     def __init__(self,boattype):
         self._boattype = boattype

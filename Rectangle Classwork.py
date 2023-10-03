@@ -18,6 +18,9 @@ class rectangle:
         self.diagnol = self.totalsquared ** 0.5
         return self.diagnol
     
-
-rectangle(10,21)
-
+width = input("oi, Input the width here: ")
+height = input("oi, Input the height here: ")
+rectangle(width,height)
+print(f"{rectangle.get_area} this is the area of the quadrilateral (i cant believe you dont know how to do this already)")
+print(f"{rectangle.get_perimeter} this is the perimeter of the quadrilateral")
+print(f"{rectangle.get_diagnol} is the length of the diagnol of the quadrilateral")

@@ -24,23 +24,30 @@ class carreg:
         else:
             return False
 
-def carregcheck(carlistchar):
-    check = True
-    while check == True:
-        check = carreg.checkupper(carlistchar[0])
-        check = carreg.checkupper(carlistchar[1])
-        check = carreg.checknumber(carlistchar[2])
-        check = carreg.checknumber(carlistchar[3])
-        check = carreg.isspace(carlistchar[4])
-        check = carreg.checkupper(carlistchar[5])
-        check = carreg.checkupper(carlistchar[6])
-        check = carreg.checkupper(carlistchar[7])
+    def carregcheck(carlistchar):
+        check = True
+        while check == True:
+            for i in range (0,1):
+                check = carreg.checkupper(carlistchar[i])
+                if check == False:
+                    return check
+            for i in range (0,1):
+                check = carreg.checknumber(carlistchar[i+2])
+                if check == False:
+                    return check
+            check = carreg.isspace(carlistchar[4])
+            if check == False:
+                return check
+            for i in range (0,2):
+                check = carreg.checkupper(carlistchar[i+5])
+            if check == False:
+                return check
+            return check
         return check
-    return check
 
 carregis = input("Input your cars registration: ")
 carregis = carreg.carregsplitter(carregis)
-if carregcheck(carregis) == True:
+if carreg.carregcheck(carregis) == True:
     print(f"the registration you entered is correctly formatted")
 else:
     print(f"You inputted the numberplate wrong")

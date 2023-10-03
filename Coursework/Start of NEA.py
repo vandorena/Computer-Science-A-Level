@@ -11,6 +11,7 @@ class boatproperties:
         self.breadthofsail = breadthofsail
         self.chordoffoil = chordoffoil
         self.weight = weighttotal
-        self.g = 9.81
+        self.g = 9.81 #ms^-2
+        self.waterdensity = 1024 #kgm^-3
         return
         

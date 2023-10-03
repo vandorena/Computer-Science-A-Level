@@ -35,7 +35,7 @@ class linearqueue:
 
 queue = linearqueue(100,9)
 for i in range (0,7):
-    queue._add(8)
+    queue._add("dingyi")
 for i in range (0,queue._lengthqueue()):
     queue._remove()
     queue._isempty()

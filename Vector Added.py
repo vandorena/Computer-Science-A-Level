@@ -131,11 +131,20 @@ while choicelistrecur == False:
         #add
         choicelistrecur = True
         if dimensioonchoice == 1:
-            for i in range(0,len(NDVECTORS)):
-                Vector(NDVECTORS[i])
+            totalvector = []
+            for i in range(0,len(NDVECTORS)-1):
+                vector1 = NDVECTORS[i]
+                vector2 = NDVECTORS[i+1]
+                currentvector = Vector(vector1)
+                addvector = Vector(vector2)
+                totalvector = currentvector + addvector
+                print(totalvector)
         else:
             for i in range(0,len(RDVECTORS)):
                 Vector(RDVECTORS[i])
+            for i in range(0,len(RDVECTORS) -1):
+                totalvector = RDVECTORS[i].__add__( RDVECTORS[i+1])
+                print(totalvector)
 
 
     elif choiceuser == 2:

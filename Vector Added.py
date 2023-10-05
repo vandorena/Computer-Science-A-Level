@@ -64,10 +64,83 @@ class Vector:
         vectoradded = Vector.__add__(vectoradd1,rdVector)
         magnitude = Vector.magnitudesingle(vectoradded)
         return magnitude
-    
-VectorUno = Vector([10,21])
-VectorDos = Vector([122,22])
 
-vectoradded = VectorUno + VectorDos
-print(vectoradded.value)
-print(VectorUno == VectorDos)
+def createvector(dimensions):
+    vectorlist = []
+    if dimensions == 2:
+        vectorlist.append(int(input("What is your i vector")))
+        vectorlist.append(int(input("What is your j vector")))
+    elif dimensions == 3:
+        vectorlist.append(int(input("Enter your i vector")))
+        vectorlist.append(int(input("Enter your j vector")))
+        vectorlist.append(int(input("Enter your k vector")))
+    return vectorlist
+
+def listsplitter(list):
+    rdvectorlist = []
+    ndVectorlist = []
+    idkvectorlist = []
+    for i in range (0,len(list)):
+        if len(list[i]) == 2:
+            ndVectorlist.append(list[i])
+        elif len(list[i]) == 3:
+            rdvectorlist.append(list[i])
+        else:
+            idkvectorlist.append(list[i])
+    concatenatedlist = [ndVectorlist,rdvectorlist,idkvectorlist]
+    return concatenatedlist
+
+
+
+overallvectorlist = []        
+for i in range (0,int(input("How many vectors do you want to input: "))):
+    dimensions = int(input("For a 3d vector enter 3, for a 2d vector enter 2: "))
+    newvector = createvector(dimensions)
+    print(f"I have added {newvector} to the list")
+    overallvectorlist.append(newvector)
+newoverallvectorlist = listsplitter(overallvectorlist)
+NDVECTORS = newoverallvectorlist[0]
+RDVECTORS = newoverallvectorlist[1]
+ERRORVECTORS = newoverallvectorlist[2]
+print(f"Your 2d Vectors are {NDVECTORS}")
+print(f"Your 3d vectors are {RDVECTORS}")
+print(f"Your error list is {ERRORVECTORS}")
+print("")
+
+
+choicelistrecur = False
+while choicelistrecur == False:
+    print("What do you want to do with those vectors?")
+    print("If you want to do some addition of the vectors enter 1: ")
+    print("If you want to find the magnitude of the vectors enter 2: ")
+    print("If you want to do some multiplication of the vectors enter 3: ")
+    choiceuser = int(input(""))
+    if choiceuser == 1 or choiceuser == 2 or choiceuser == 3:
+        choicelistrecur = True
+
+    dimensionchoicerecur = False
+
+    while dimensionchoicerecur == False:
+        print("to work with the 2d vectors entered earlier, input 1")
+        print("to work with the 3d vectors entered earlier input 2")
+        dimensioonchoice = int(input(""))
+        if dimensioonchoice == 1 or dimensioonchoice == 2:
+            dimensionchoicerecur = True
+
+    if choiceuser == 1:
+        #add
+        choicelistrecur = True
+        if dimensioonchoice == 1:
+            for i in range(0,len(NDVECTORS)):
+                Vector(NDVECTORS[i])
+        else:
+            for i in range(0,len(RDVECTORS)):
+                Vector(RDVECTORS[i])
+
+
+    elif choiceuser == 2:
+        choicelistrecur = True
+        #magnitude
+    elif choiceuser == 3:
+        # multiply
+        choicelistrecur = True

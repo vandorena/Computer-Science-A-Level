@@ -2,6 +2,11 @@ import math
 class Vector:
     def __init__(self,Vector1):
         self.dimensions = len(Vector1)
+        if type(Vector1) == "list":
+            self.dimensions = len(Vector1)
+        elif(type(Vector1) == Vector):
+            print("its a vector")
+            self.dimensions == len(Vector1.value)
         if self.dimensions == 2:
             self.xvector = Vector1[0]
             self.yvector = Vector1[1]
@@ -137,10 +142,10 @@ while choicelistrecur == False:
                     vector1 = NDVECTORS[i]
                 else: vector1 = totalvector
                 vector2 = NDVECTORS[i+1]
-                currentvector = Vector(vector1)
-                addvector = Vector(vector2)
-                totalvector = currentvector + addvector
-                print(totalvector.value)
+                currentvector = vector1
+                addvector = vector2
+                totalvector = Vector(currentvector + addvector)
+                print(totalvector)
         else:
             for i in range(0,len(RDVECTORS)):
                 Vector(RDVECTORS[i])

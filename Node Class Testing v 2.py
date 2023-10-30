@@ -22,11 +22,13 @@ class Node:
     def __init__(self,name):
        Node.linkednodes = []
        Node.nodename = str(name)
+       Nodedictionary.adddictionary(self)
     
     def addverticies(self):
       numberverticies = int(input("How many nodes do you want to add?"))
       for i in range (1,numberverticies):
-         print("hi")
+         nameofnewnode = input("What do you want to call this new Verticie to be called?: ")
+         verticiemaker(nameofnewnode)
                   
 
 

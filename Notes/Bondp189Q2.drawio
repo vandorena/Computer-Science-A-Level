@@ -1,0 +1,40 @@
+<mxfile host="65bd71144e">
+    <diagram id="6z0RZvNSIJW6IgZZaNSl" name="Page-1">
+        <mxGraphModel dx="381" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="TApplication" style="html=1;" vertex="1" parent="1">
+                    <mxGeometry x="185" y="150" width="110" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" style="edgeStyle=elbowEdgeStyle;elbow=vertical;html=1;strokeColor=#F0F0F0;strokeWidth=1;endArrow=diamondThin;endFill=0;" edge="1" parent="1" source="3" target="2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="TForm" style="html=1;" vertex="1" parent="1">
+                    <mxGeometry x="185" y="250" width="110" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" style="edgeStyle=elbowEdgeStyle;elbow=vertical;html=1;endArrow=diamondThin;endFill=0;" edge="1" parent="1" source="4" target="3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="TButton" style="html=1;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="370" width="110" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" style="edgeStyle=elbowEdgeStyle;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;elbow=vertical;endArrow=diamondThin;endFill=0;strokeWidth=1;strokeColor=#F0F0F0;" edge="1" parent="1" source="5" target="3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="TEdit" style="html=1;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="370" width="110" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="TForm" style="html=1;" vertex="1" parent="1">
+                    <mxGeometry x="450" y="150" width="110" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" style="edgeStyle=elbowEdgeStyle;elbow=vertical;html=1;strokeColor=#F0F0F0;strokeWidth=1;endArrow=block;endFill=1;" edge="1" parent="1" source="11" target="10">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="TForm1" style="html=1;" vertex="1" parent="1">
+                    <mxGeometry x="450" y="270" width="110" height="50" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

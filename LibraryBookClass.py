@@ -2,12 +2,13 @@ import datetime
 import time
 class LibaryStock:
 
-    def __init__(self,Title,Maker):
+    def __init__(self,Title,Maker,genre):
         self._Title = Title
         self._Maker = Maker
         self.Onloan = False
         self._DateAcquired = datetime.datetime.now()
         self.Overdue = False
+        self._Genre = genre
 
     def setloan(self):
         self.Onloan = True
@@ -18,12 +19,14 @@ class LibaryStock:
 
 class CD(LibaryStock):
 
-    def __init__(self, Title, Maker, playtime):
-        super().__init__(Title, Maker)
+    def __init__(self, Title, Maker, album, genre, playtime):
+        super().__init__(Title, Maker, genre)
         self._Playtime = playtime
+        self._Album = album
+        
 
     def DisplayDetails(self):
-        print(f"{self._Title}, {self._Maker}, {self.Onloan}, {self._DateAcquired}, Playtime is {self._Playtime} seconds")
+        print(f"Title is: {self._Title}, Artist: {self._Maker}, Album: {self._Album}, Genre: {self._Genre} Loan Status: {self.Onloan}, Date and Time Acquired: {self._DateAcquired}, Playtime is {self._Playtime} seconds")
 
 class Book(LibaryStock):
     def __init__(self, Title, Maker, ISBN):
@@ -31,7 +34,7 @@ class Book(LibaryStock):
         self._ISBN = ISBN
     
     def DisplayDetails(self):
-        print(f"{self._Title}, {self._Maker}, {self.Onloan}, {self._DateAcquired}, {self._ISBN}")
+        print(f"Title is : {self._Title}, Author is: {self._Maker}, Genre is: {self._Genre}, Loan Status: {self.Onloan}, Date and Time Acquired: {self._DateAcquired}, ISBN Reference: {self._ISBN}")
 
 
 

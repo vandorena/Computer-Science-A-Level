@@ -47,12 +47,20 @@ class LibraryArray:
     def __init__(self):
         self.Booklist = []
         self.CDlist = []
+        self.biglist = []
 
     def BooklistAppend(self,data):
         self.Booklist.append(data)
+        self.biglist = [self.Booklist,self.CDlist]
     
     def CDlistAppend(self,data):
         self.CDlist.append(data)
+        self.biglist = [self.Booklist,self.CDlist]
+    
+    def printalllist(self):
+        print(f" the biglist is: {self.biglist}")
+        print(f"the cd list is {self.CDlist}")
+        print(f"The Book List is: {self.Booklist}")
 
 Libraryarray = LibraryArray()
 
@@ -64,7 +72,7 @@ def newitem():
             print ("Enter 1 to add a new CD, enter 2 to add a new Book")
             print ("")
             userchoicebetweencdandbook = int(input())
-            if userchoicebetweencdandbook == (1 or 2):
+            if userchoicebetweencdandbook == 1 or userchoicebetweencdandbook ==2 :
                 wronginputfordigitchoice = True
         if userchoicebetweencdandbook == 1:
             secondwhileloopholder = False
@@ -79,19 +87,29 @@ def newitem():
                 print(f"is this correct?")
                 correct = input("")
                 if correct == "":
+                    returnitem = CD(titles,maker,album,genre,playtime)
 #gotta add stuff here
                     secondwhileloopholder = True
+                    return returnitem
         else:
             secondwhileloopholder = False
             while not secondwhileloopholder:
                 titles = input("Enter the title: ")
                 maker = input("Enter the author name: ")
-                album = input("Enter the album here: ")
+                Isbn = input("Enter the ISBN here: ")
                 genre = input ("Enter the genre here: ")
-                playtime = input ("enter the time in seconds here") # I could try to do more with the datetime module but atm i dont feel like the added complexity would add necessary value
+                #playtime = input ("enter the time in seconds here") # I could try to do more with the datetime module but atm i dont feel like the added complexity would add necessary value
                 print(f"please check over the following, and click enter if they are correct")
-                print(f"your title is: {titles}, your artist is {maker}, your album is {album}, your genre is {genre} and your playtime is {playtime} seconds")
+                print(f"your title is: {titles}, your author is {maker}, your ISBN is {Isbn}, your genre is {genre}")
                 print(f"is this correct?")
                 correct = input("")
                 if correct == "":
+                    returnitem = Book(titles,maker,Isbn,genre)
                     secondwhileloopholder = True
+                    return returnitem
+
+
+item1 = newitem()
+item2 = newitem()
+iteem3 = newitem()
+Libraryarray.printalllist()

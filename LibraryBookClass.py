@@ -26,7 +26,7 @@ class CD(LibaryStock):
         self._Playtime = playtime
         self._Album = album
         self.pointer = len(Libraryarray.CDlist) + 1
-        self.datapackage = [self._Title,self._Maker,self._Playtime,self._Album,self._Genre,self.pointer]
+        self.datapackage = [self._Title,self._Maker,self._Playtime,self._Album,self._Genre,self.pointer,self]
         Libraryarray.CDlistAppend(self.datapackage)
         Libraryarray._cdsort()
         self._maxloantime = datetime.timedelta(days= 7)
@@ -40,7 +40,7 @@ class Book(LibaryStock):
         super().__init__(Title, Maker, genre)
         self._ISBN = ISBN
         self.pointer = len(Libraryarray.Booklist) + 1
-        self.datapackage = [self._Title,self._Maker,self._ISBN,self._Genre,self.pointer]
+        self.datapackage = [self._Title,self._Maker,self._ISBN,self._Genre,self.pointer,self]
         Libraryarray.BooklistAppend(self.datapackage)
         Libraryarray._booksort()
         self._maxloantime = datetime.timedelta(days=14)
@@ -148,11 +148,23 @@ def manualsort():
         Libraryarray._biglistsort()
 
 def setloan():
-    
+    firstbooleanholder = False
+    while not firstbooleanholder:
+        for i in range(0,len(Libraryarray.biglist)):
+            print(f"enter {i} to select the item called {Libraryarray.biglist[1][i][0]}")
+        userchoice = int(input(""))
+        if type(userchoice) != "string":
+            firstbooleanholder = True
+    Libraryarray.biglist[1][userchoice][-1].setloan()
+
+
+
             
 
 
 item1 = _newitem()
 item2 = _newitem()
+setloan()
+
 item3 = _newitem()
 Libraryarray.printalllist()

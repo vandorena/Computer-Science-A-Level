@@ -18,6 +18,7 @@ class LibaryStock:
     
     def Returnloan(self):
         self.Onloan = False
+        self.datedue = datetime.datetime.now()
 
 class CD(LibaryStock):
 
@@ -157,14 +158,23 @@ def setloan():
             firstbooleanholder = True
     Libraryarray.biglist[1][userchoice][-1].setloan()
 
-
-
-            
+def returnloan():
+    firstbooleanholder = False
+    while not firstbooleanholder:
+        for i in range(0,len(Libraryarray.biglist)):
+            print(f"enter {i} to select the item called {Libraryarray.biglist[1][i][0]}")
+        userchoice = input("")
+        userchoice = int(userchoice)
+        if type(userchoice) != "string" and len(userchoice) == 1 :
+            firstbooleanholder = True
+    Libraryarray.biglist[1][userchoice][-1].Returnloan()
 
 
 item1 = _newitem()
 item2 = _newitem()
 setloan()
-
+item1.DisplayDetails()
+item2.DisplayDetails()
+returnloan()
 item3 = _newitem()
 Libraryarray.printalllist()

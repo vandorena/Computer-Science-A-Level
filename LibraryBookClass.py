@@ -62,9 +62,25 @@ class LibraryArray:
         print(f"the cd list is {self.CDlist}")
         print(f"The Book List is: {self.Booklist}")
 
+    def _cdsort(self):
+        for i in range (0,len(self.CDlist)):
+            for j in range(0,len(self.CDlist)-i-1):
+                if self.CDlist[j[1]] > self.CDlist[j+1[1]]:
+                    self.CDlist[j], self.CDlist[j+1] = self.CDlist[j+1] ,self.CDlist[j]
+    
+    def _booksort(self):
+        for i in range (0,len(self.Booklist)):
+            for j in range(0,len(self.Booklist)-i-1):
+                if self.Booklist[j[1]] > self.Booklist[j+1[1]]:
+                    self.Booklist[j], self.Booklist[j+1] = self.Booklist[j+1] ,self.Booklist[j]
+
+
+    def booksort(self):
+
+
 Libraryarray = LibraryArray()
 
-def newitem():
+def _newitem():
     holderforfirstwhileloop = False
     while not holderforfirstwhileloop:
         wronginputfordigitchoice = False
@@ -108,8 +124,18 @@ def newitem():
                     secondwhileloopholder = True
                     return returnitem
 
+def sort():
+    userchoiceboolholder = False
+    while not userchoiceboolholder:
+        print("Enter 1 to sort the cd list, or 2 to sort the book list")
+        cdorbooklist = int(input(""))
+        if cdorbooklist == 1 or cdorbooklist == 2:
+            userchoiceboolholder = True
+    if cdorbooklist == 1:
+            
 
-item1 = newitem()
-item2 = newitem()
-iteem3 = newitem()
+
+item1 = _newitem()
+item2 = _newitem()
+item3 = _newitem()
 Libraryarray.printalllist()

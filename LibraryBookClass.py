@@ -27,6 +27,7 @@ class CD(LibaryStock):
         self.pointer = len(Libraryarray.CDlist) + 1
         self.datapackage = [self._Title,self._Maker,self._Playtime,self._Album,self._Genre,self.pointer]
         Libraryarray.CDlistAppend(self.datapackage)
+        Libraryarray._cdsort()
         
 
     def DisplayDetails(self):
@@ -39,6 +40,7 @@ class Book(LibaryStock):
         self.pointer = len(Libraryarray.Booklist) + 1
         self.datapackage = [self._Title,self._Maker,self._ISBN,self._Genre,self.pointer]
         Libraryarray.BooklistAppend(self.datapackage)
+        Libraryarray._booksort()
     
     def DisplayDetails(self):
         print(f"Title is : {self._Title}, Author is: {self._Maker}, Genre is: {self._Genre}, Loan Status: {self.Onloan}, Date and Time Acquired: {self._DateAcquired}, ISBN Reference: {self._ISBN}")
@@ -65,17 +67,21 @@ class LibraryArray:
     def _cdsort(self):
         for i in range (0,len(self.CDlist)):
             for j in range(0,len(self.CDlist)-i-1):
-                if self.CDlist[j[1]] > self.CDlist[j+1[1]]:
+                if self.CDlist[i][1] > self.CDlist[j+1][1]:
                     self.CDlist[j], self.CDlist[j+1] = self.CDlist[j+1] ,self.CDlist[j]
     
     def _booksort(self):
         for i in range (0,len(self.Booklist)):
             for j in range(0,len(self.Booklist)-i-1):
-                if self.Booklist[j[1]] > self.Booklist[j+1[1]]:
+                if self.Booklist[i][1] > self.Booklist[j+1][1]:
                     self.Booklist[j], self.Booklist[j+1] = self.Booklist[j+1] ,self.Booklist[j]
+    
+    def _biglistsort(self):
+        for i in range (0,len(self.biglist)):
+            for j in range(0,len(self.biglist)-i-1):
+                if self.biglist[i][1] > self.biglist[j+1][1]:
+                    self.biglist[j], self.biglist[j+1] = self.biglist[j+1] ,self.biglist[j]
 
-
-    def booksort(self):
 
 
 Libraryarray = LibraryArray()
@@ -124,14 +130,19 @@ def _newitem():
                     secondwhileloopholder = True
                     return returnitem
 
-def sort():
+def manualsort():
     userchoiceboolholder = False
     while not userchoiceboolholder:
-        print("Enter 1 to sort the cd list, or 2 to sort the book list")
+        print("Enter 1 to sort the cd list, or 2 to sort the book list, or enter 3 to sort the encompassinglist")
         cdorbooklist = int(input(""))
-        if cdorbooklist == 1 or cdorbooklist == 2:
+        if cdorbooklist == 1 or cdorbooklist == 2 or cdorbooklist == 3:
             userchoiceboolholder = True
     if cdorbooklist == 1:
+        Libraryarray._cdsort()
+    elif cdorbooklist == 2:
+        Libraryarray._booksort()
+    else:
+        Libraryarray._biglistsort()
             
 
 

@@ -14,7 +14,8 @@ class LibaryStock:
     def setloan(self):
         self.Onloan = True
         self.datelended = datetime.datetime.now()
-
+        self.datedue = datetime.datetime.now() + self._maxloantime
+    
     def Returnloan(self):
         self.Onloan = False
 
@@ -28,6 +29,7 @@ class CD(LibaryStock):
         self.datapackage = [self._Title,self._Maker,self._Playtime,self._Album,self._Genre,self.pointer]
         Libraryarray.CDlistAppend(self.datapackage)
         Libraryarray._cdsort()
+        self._maxloantime = datetime.timedelta(days= 7)
         
 
     def DisplayDetails(self):
@@ -41,6 +43,7 @@ class Book(LibaryStock):
         self.datapackage = [self._Title,self._Maker,self._ISBN,self._Genre,self.pointer]
         Libraryarray.BooklistAppend(self.datapackage)
         Libraryarray._booksort()
+        self._maxloantime = datetime.timedelta(days=14)
     
     def DisplayDetails(self):
         print(f"Title is : {self._Title}, Author is: {self._Maker}, Genre is: {self._Genre}, Loan Status: {self.Onloan}, Date and Time Acquired: {self._DateAcquired}, ISBN Reference: {self._ISBN}")
@@ -143,6 +146,9 @@ def manualsort():
         Libraryarray._booksort()
     else:
         Libraryarray._biglistsort()
+
+def setloan():
+    
             
 
 

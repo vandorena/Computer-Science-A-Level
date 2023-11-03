@@ -62,7 +62,18 @@ class LibraryArray:
     def CDlistAppend(self,data):
         self.CDlist.append(data)
         self.biglist = [self.Booklist,self.CDlist]
-    
+
+    def _printsinglelist(self,integer):
+        if integer == 1:
+            for i in range(0,len(self.biglist[1])):
+                print(self.biglist[1][i])
+        elif integer == 2:
+            for i in range(0,len(self.Booklist)):
+                print(self.Booklist[i])
+        elif integer == 3:
+            for i in range(0,len(self.CDlist)):
+                print(self.CDlist[i])
+
     def printalllist(self):
         print(f" the biglist is: {self.biglist}")
         print(f"the cd list is {self.CDlist}")
@@ -81,12 +92,10 @@ class LibraryArray:
                     self.Booklist[j], self.Booklist[j+1] = self.Booklist[j+1] ,self.Booklist[j]
     
     def _biglistsort(self):
-        for i in range (0,len(self.biglist)):
-            for j in range(0,len(self.biglist)-i-1):
-                if self.biglist[i][1] > self.biglist[j+1][1]:
-                    self.biglist[j], self.biglist[j+1] = self.biglist[j+1] ,self.biglist[j]
-
-
+        for i in range (0,len(self.biglist[1])):
+            for j in range(0,len(self.biglist[1])-i-1):
+                if self.biglist[1][i][1] > self.biglist[1][j+1][1]:
+                    self.biglist[1][j], self.biglist1[1][j+1] = self.biglist[1][j+1] ,self.biglist[1][j]
 
 Libraryarray = LibraryArray()
 
@@ -168,6 +177,34 @@ def returnloan():
         if type(userchoice) != "string" and len(userchoice) == 1 :
             firstbooleanholder = True
     Libraryarray.biglist[1][userchoice][-1].Returnloan()
+
+def runtimemenu():
+    whileloopholder = False
+    while not whileloopholder:
+        print("Welcome to Library Manager :)")
+        print("Here you can check books in and out, as well as register books")
+        print("To create a new item enter 1")
+        print ("To Display an items details enter 2")
+        print("To set a loan enter 3")
+        print("To return a loan enter 4")
+        print("To print a list enter 5")
+        print("To print all lists enter 6")
+        print("enter the number corresponding to your choice below:")
+        print("")
+        userchoice = int(input(""))
+        if userchoice <= 6 and userchoice >=1:
+            whileloopholder = True
+    if userchoice == 5:
+        Libraryarray._printsinglelist(userchoice)
+
+def listdisplayfunction():
+    whileloopholder = False
+    while not whileloopholder:
+        print("To view the list of all items in the library enter 1, to view the list of all books in the library enter 2, to view the list of all cds in the library enter 3.")
+        userinput = int(input(""))
+        if userinput == 1 or userinput == 2  or userinput == 3:
+            whileloopholder = True
+    Libraryarray._printsinglelist(userinput)
 
 
 item1 = _newitem()

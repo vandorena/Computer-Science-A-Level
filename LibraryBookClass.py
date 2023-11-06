@@ -179,23 +179,69 @@ def returnloan():
     Libraryarray.biglist[1][userchoice][-1].Returnloan()
 
 def runtimemenu():
-    whileloopholder = False
-    while not whileloopholder:
-        print("Welcome to Library Manager :)")
-        print("Here you can check books in and out, as well as register books")
-        print("To create a new item enter 1")
-        print ("To Display an items details enter 2")
-        print("To set a loan enter 3")
-        print("To return a loan enter 4")
-        print("To print a list enter 5")
-        print("To print all lists enter 6")
-        print("enter the number corresponding to your choice below:")
-        print("")
-        userchoice = int(input(""))
-        if userchoice <= 6 and userchoice >=1:
-            whileloopholder = True
-    if userchoice == 5:
-        Libraryarray._printsinglelist(userchoice)
+    whileloopholder1 = False
+    whileloopholder2 = False
+    while not whileloopholder1:
+        while not whileloopholder2:
+            print("Welcome to Library Manager :)")
+            print("Here you can check books in and out, as well as register books")
+            print("To create a new item enter 1")
+            print ("To Display all items details enter 2")
+            print("To set a loan enter 3")
+            print("To return a loan enter 4")
+            print("To print a list enter 5")
+            print("To print all lists enter 6")
+            print("To show a single items details enter 7")
+            print("To exit the program enter 8")
+            print("enter the number corresponding to your choice below:")
+            print("")
+            userchoice = int(input(""))
+            if userchoice <= 8 and userchoice >=1:
+                whileloopholder2 = True
+        if userchoice == 5:
+            listdisplayfunction()
+        elif userchoice == 4:
+            returnloan()
+        elif userchoice == 3:
+            setloan()
+        elif userchoice == 6:
+            Libraryarray.printalllist()
+        elif userchoice == 7:
+            showsingledetailfunction()
+        elif userchoice == 1:
+            _newitem()
+        elif userchoice == 2:
+            showdetailfunction()
+        elif userchoice == 8:
+            whileloopholder1 = True
+        userchoice = 0
+        whileloopholder2 = False
+        time.sleep(2)
+        
+        for i in range(0,3):
+            print("")
+            i += 1
+        
+
+         
+
+def showdetailfunction():
+    for i in range(0,len(len(Libraryarray.Booklist))):
+        LibraryArray.Booklist[i].DisplayDetails()
+    for i in range(0,len(Libraryarray.CDlist)):
+        Libraryarray.CDlist[i].DisplayDetails()
+
+def showsingledetailfunction():
+    firstbooleanholder = False
+    while not firstbooleanholder:
+        for i in range(0,len(Libraryarray.biglist)):
+            print(f"enter {i} to select the item called {Libraryarray.biglist[1][i][0]}")
+        userchoice = input("")
+        userchoice = int(userchoice)
+        if type(userchoice) != "string" and len(userchoice) == 1 :
+            firstbooleanholder = True
+    Libraryarray.biglist[1][userchoice][-1].DisplayDetails()
+
 
 def listdisplayfunction():
     whileloopholder = False
@@ -206,12 +252,4 @@ def listdisplayfunction():
             whileloopholder = True
     Libraryarray._printsinglelist(userinput)
 
-
-item1 = _newitem()
-item2 = _newitem()
-setloan()
-item1.DisplayDetails()
-item2.DisplayDetails()
-returnloan()
-item3 = _newitem()
-Libraryarray.printalllist()
+runtimemenu()

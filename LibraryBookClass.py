@@ -46,6 +46,8 @@ class Book(LibaryStock):
         Libraryarray._booksort()
         self._maxloantime = datetime.timedelta(days=14)
     
+    
+    
     def DisplayDetails(self):
         print(f"Title is : {self._Title}, Author is: {self._Maker}, Genre is: {self._Genre}, Loan Status: {self.Onloan}, Date and Time Acquired: {self._DateAcquired}, ISBN Reference: {self._ISBN}")
 
@@ -143,7 +145,17 @@ def _newitem():
             while not secondwhileloopholder:
                 titles = input("Enter the title: ")
                 maker = input("Enter the author name: ")
-                Isbn = input("Enter the ISBN here: ")
+                isbn_while_loop_holder = False
+                isbn_while_loop_hold_check = False
+                while not isbn_while_loop_holder or not isbn_while_loop_hold_check:
+                    Isbn = input("Enter the ISBN here: ")
+                    try:
+                        if len(Isbn) == 13:
+                            isbn_while_loop_holder = True
+                        if ISBNChecker(Isbn) == True:
+                            isbn_while_loop_hold_check = True
+                    except:
+                        raise ValueError
                 genre = input ("Enter the genre here: ")
                 #playtime = input ("enter the time in seconds here") # I could try to do more with the datetime module but atm i dont feel like the added complexity would add necessary value
                 print(f"please check over the following, and click enter if they are correct")
@@ -270,6 +282,7 @@ def showsingledetailfunction():
         print("Please add items")
 
 
+
 def listdisplayfunction():
     whileloopholder = False
     while not whileloopholder:
@@ -278,5 +291,26 @@ def listdisplayfunction():
         if userinput == 1 or userinput == 2  or userinput == 3:
             whileloopholder = True
     Libraryarray._printsinglelist(userinput)
+
+def ISBNChecker(isben):
+    ISBN = []
+    for i in range(0,13):
+        ISBN.append(isben)
+    Calculateddigit = 0
+    count = 0
+    while count < 12:
+        Calculateddigit = Calculateddigit + ISBN[count]
+        count = count + 1
+        Calculateddigit = Calculateddigit + ISBN[count] * 3
+        count = count +1
+    while Calculateddigit >= 10:
+        Calculateddigit = Calculateddigit - 10
+    Calculateddigit = 10 - Calculateddigit
+    if Calculateddigit == 10:
+        Calculateddigit = 0
+    if Calculateddigit == ISBN[-1]:
+        return True
+    else:
+        return False
 
 runtimemenu()

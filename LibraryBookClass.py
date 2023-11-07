@@ -64,15 +64,18 @@ class LibraryArray:
         self.biglist = [self.Booklist,self.CDlist]
 
     def _printsinglelist(self,integer):
-        if integer == 1:
-            for i in range(0,len(self.biglist[1])):
-                print(self.biglist[1][i])
-        elif integer == 2:
-            for i in range(0,len(self.Booklist)):
-                print(self.Booklist[i])
-        elif integer == 3:
-            for i in range(0,len(self.CDlist)):
-                print(self.CDlist[i])
+        try:
+            if integer == 1:
+                for i in range(0,len(self.biglist[1])):
+                    print(self.biglist[1][i])
+            elif integer == 2:
+                for i in range(0,len(self.Booklist)):
+                    print(self.Booklist[i])
+            elif integer == 3:
+                for i in range(0,len(self.CDlist)):
+                    print(self.CDlist[i])
+        except TypeError:
+            print("There was an error, add to the lists")
 
     def printalllist(self):
         print(f" the biglist is: {self.biglist}")
@@ -80,22 +83,31 @@ class LibraryArray:
         print(f"The Book List is: {self.Booklist}")
 
     def _cdsort(self):
-        for i in range (0,len(self.CDlist)):
-            for j in range(0,len(self.CDlist)-i-1):
-                if self.CDlist[i][1] > self.CDlist[j+1][1]:
-                    self.CDlist[j], self.CDlist[j+1] = self.CDlist[j+1] ,self.CDlist[j]
+        try:
+            for i in range (0,len(self.CDlist)):
+                for j in range(0,len(self.CDlist)-i-1):
+                    if self.CDlist[i][1] > self.CDlist[j+1][1]:
+                        self.CDlist[j], self.CDlist[j+1] = self.CDlist[j+1] ,self.CDlist[j]
+        except TypeError:
+            print("There was an error sorting the CD list")
     
     def _booksort(self):
-        for i in range (0,len(self.Booklist)):
-            for j in range(0,len(self.Booklist)-i-1):
-                if self.Booklist[i][1] > self.Booklist[j+1][1]:
-                    self.Booklist[j], self.Booklist[j+1] = self.Booklist[j+1] ,self.Booklist[j]
+        try:
+            for i in range (0,len(self.Booklist)):
+                for j in range(0,len(self.Booklist)-i-1):
+                    if self.Booklist[i][1] > self.Booklist[j+1][1]:
+                        self.Booklist[j], self.Booklist[j+1] = self.Booklist[j+1] ,self.Booklist[j]
+        except TypeError:
+            print("There was an error sorting the book list")
     
     def _biglistsort(self):
-        for i in range (0,len(self.biglist[1])):
-            for j in range(0,len(self.biglist[1])-i-1):
-                if self.biglist[1][i][1] > self.biglist[1][j+1][1]:
-                    self.biglist[1][j], self.biglist1[1][j+1] = self.biglist[1][j+1] ,self.biglist[1][j]
+        try:
+            for i in range (0,len(self.biglist[1])):
+                for j in range(0,len(self.biglist[1])-i-1):
+                    if self.biglist[1][i][1] > self.biglist[1][j+1][1]:
+                        self.biglist[1][j], self.biglist1[1][j+1] = self.biglist[1][j+1] ,self.biglist[1][j]
+        except TypeError:
+            print("There was an error sorting the big list")
 
 Libraryarray = LibraryArray()
 
@@ -158,25 +170,31 @@ def manualsort():
         Libraryarray._biglistsort()
 
 def setloan():
-    firstbooleanholder = False
-    while not firstbooleanholder:
-        for i in range(0,len(Libraryarray.biglist)):
-            print(f"enter {i} to select the item called {Libraryarray.biglist[1][i][0]}")
-        userchoice = int(input(""))
-        if type(userchoice) != "string":
-            firstbooleanholder = True
-    Libraryarray.biglist[1][userchoice][-1].setloan()
+    try:
+        firstbooleanholder = False
+        while not firstbooleanholder:
+            for i in range(0,len(Libraryarray.biglist)):
+                print(f"enter {i} to select the item called {Libraryarray.biglist[1][i][0]}")
+            userchoice = int(input(""))
+            if type(userchoice) != "string":
+                firstbooleanholder = True
+        Libraryarray.biglist[1][userchoice][-1].setloan()
+    except TypeError:
+        print("Error setting loan")
 
 def returnloan():
-    firstbooleanholder = False
-    while not firstbooleanholder:
-        for i in range(0,len(Libraryarray.biglist)):
-            print(f"enter {i} to select the item called {Libraryarray.biglist[1][i][0]}")
-        userchoice = input("")
-        userchoice = int(userchoice)
-        if type(userchoice) != "string" and len(userchoice) == 1 :
-            firstbooleanholder = True
-    Libraryarray.biglist[1][userchoice][-1].Returnloan()
+    try:
+        firstbooleanholder = False
+        while not firstbooleanholder:
+            for i in range(0,len(Libraryarray.biglist)):
+                print(f"enter {i} to select the item called {Libraryarray.biglist[1][i][0]}")
+            userchoice = input("")
+            userchoice = int(userchoice)
+            if type(userchoice) != "string" and len(userchoice) == 1 :
+                firstbooleanholder = True
+        Libraryarray.biglist[1][userchoice][-1].Returnloan()
+    except TypeError:
+        print("Error returning loan")
 
 def runtimemenu():
     whileloopholder1 = False
@@ -226,21 +244,30 @@ def runtimemenu():
          
 
 def showdetailfunction():
-    for i in range(0,len(len(Libraryarray.Booklist))):
-        LibraryArray.Booklist[i].DisplayDetails()
-    for i in range(0,len(Libraryarray.CDlist)):
-        Libraryarray.CDlist[i].DisplayDetails()
+    try:
+        for i in range(0,len(len(Libraryarray.Booklist))):
+            LibraryArray.Booklist[i].DisplayDetails()
+    except TypeError:
+        print("You need to add books to display the booklist")
+    try:
+        for i in range(0,len(Libraryarray.CDlist)):
+            Libraryarray.CDlist[i].DisplayDetails()
+    except TypeError:
+        print("You need to add CDs to view the CDList")
 
 def showsingledetailfunction():
-    firstbooleanholder = False
-    while not firstbooleanholder:
-        for i in range(0,len(Libraryarray.biglist)):
-            print(f"enter {i} to select the item called {Libraryarray.biglist[1][i][0]}")
-        userchoice = input("")
-        userchoice = int(userchoice)
-        if type(userchoice) != "string" and len(userchoice) == 1 :
-            firstbooleanholder = True
-    Libraryarray.biglist[1][userchoice][-1].DisplayDetails()
+    try:
+        firstbooleanholder = False
+        while not firstbooleanholder:
+            for i in range(0,len(Libraryarray.biglist)):
+                print(f"enter {i} to select the item called {Libraryarray.biglist[1][i][0]}")
+            userchoice = input("")
+            userchoice = int(userchoice)
+            if type(userchoice) != "string" and len(userchoice) == 1 :
+                firstbooleanholder = True
+        Libraryarray.biglist[1][userchoice][-1].DisplayDetails()
+    except TypeError:
+        print("Please add items")
 
 
 def listdisplayfunction():

@@ -20,19 +20,19 @@ What is the meta oversight board?
 			should there be incitement of violence
 			should there be government influence over platforms.
 		They are in a very dynamic legal area.
-		what is the normative framework that should govern social media, how should international human rights law govern the board and social media.
-		the expereince of the baord has shown how a rights based network is essential in thinking through these problems
+		what is the normative framework that should govern social media, how should international [human rights] law govern the board and social media.
+		the experience of the board has shown how a rights based network is essential in thinking through these problems
 		basing it only on human rights law is insufficeint, since it can't moderate speech at scale.
 		David Kay - Look Him Up
 		Evelyn Duak - Look her up
 
-Outline of where human rights norms get worked into boards decisions.
+Outline of where [human rights] norms get worked into boards decisions.
 	They look at the 2011 coporate
-	UDHR
-	PERD
-	ConvRightChild
-	ConvRightWomen
-	1966 Covenant on Political and Civil Rights
+	[UDHR]
+	[PERD]
+	[Convention on the Rights of the Child]
+	[Convention on the Rights of Women]
+	[1966 Covenant on Political and Civil Rights]
 	every content decision is based on limitations on freedom of expression.
 		has this been done in a ways that stasifies legal issues.
 		by putting human rights in the centre of the argument, 
@@ -118,14 +118,14 @@ Lets take a step back - Identify why this is such a difficult problem.
 	we need to try to ensure that VLIPs can train both content moderators and algorithmic processors, to downscale language and communication that can be problematic.
 
 
-Article 20 Treaty 1966 Civil Rights and Political Rights
+[Article 20 Treaty 1966 Civil Rights and Political Rights]
 	Article 10 EU Convention
-	1st Ammendment Rights
+	[1st Amendment] Rights
 		Directed at State Power.
 
 The USA is doing a horrible job at failing to try to reach a resonable way to regulate this space.
 
-Overall the sectiom 230 approach has been very useful in protecting human expression
+Overall the [section 230 approach] has been very useful in protecting human expression
 the fact that we are all publishers is beneficial to human rights.
 
 How do you deal with the fact America is an outlier in the Human Rights Community?

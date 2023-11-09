@@ -1,0 +1,3 @@
+Equilibrium Relating to [[Newton 3]]
+	When a person is in a [[state of rest]] on earth. The forces acting upon them are in [[equilibrium]]. This is due to their [[weight]] being equal to their [[normal reaction force]]. 
+	If the person jumps into the air there is still an [[equal and opposite]] force acting upon the earth. But there is a greater force upwards acting on the woman than her weight is downwards. This means that the woman is not in [[equilibrium]].

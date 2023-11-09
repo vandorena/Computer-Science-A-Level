@@ -1,0 +1,1 @@
+[[Devolution]] refers to the process where power is delegated to specific regions of a state, but where [[sovereignty]] does not change.

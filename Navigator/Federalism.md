@@ -1,0 +1,1 @@
+In a [[Federal System]] [[sovereignty]] is divided. This is where ultimate [[legal authority]] is split between the areas and has not merely been [[delegated]], as it has been in the [[UK]] 

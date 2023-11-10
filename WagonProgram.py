@@ -26,25 +26,19 @@ class RefrigeratedWagon(ClosedWagon):
 
 class Siding:
     def __init__(self):
-        self._data = [None]*30
-    
-    def __len__(self):
-        return len(self._data)
-    
-    def is_empty(self):
-        return len(self._data) == 0
-    
-    def push(self, e):
-        self._data.append(e) #im lazy
+        self.data = [None]*30
+        self.toppointer = -1
+    def push(self,newitem):
+        if self.toppointer == 29:
+            raise NotEnoughSpace
+        else:
+            self.toppointer += 1
+            self.data[self.toppointer] = newitem
+    def pop(self):
+        returnitem = self.data[self.toppointer]
+        self.toppointer -= 1
+        return returnitem
 
-    def top(self):
-        if self.is_empty():
-            raise Empty("Stack is empty")
-        return self._data[-1]
-    def pop(self): 
-        if self.is_empty():
-            raise Empty("Stack is empty")
-        return self._data.pop() # im lazy
     
     
     

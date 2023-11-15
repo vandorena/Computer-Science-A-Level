@@ -1,4 +1,4 @@
-[X,Y] = meshgrid(-100:.5:100);
+[X,Y] = meshgrid(-500:.5:500);
 R = sqrt(X.^2 + Y.^2) +eps;
 Z = sin(R)./R;
 figure(2)

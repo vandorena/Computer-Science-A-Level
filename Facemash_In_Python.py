@@ -7,14 +7,17 @@ class Person:
         self._name = ""
         self.rank = 0
         self._picture = name
+    
+    def _rankup(self, increase):
+        self.rank += increase
 
 class List:
     def __init__(self):
         self.data = []
+    
 
-    def new_match(self,Person_1,Person_2):
-        match = [Person_1,Person_2]
-        self.data.append(match)
+class Match:
+
 
 
 def person_maker():

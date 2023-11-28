@@ -85,7 +85,7 @@ def take_turn(move_counter):
                 row_int = int(row)
             except ValueError:
                 row_int = -1
-            if row_int > 0 and row_int < 4 and len(row_int) == 1:
+            if row_int > 0 and row_int < 4 and len(row) == 1:
                 row_holder = False
             else:
                 row_holder = True
@@ -96,7 +96,7 @@ def take_turn(move_counter):
                 col_int = int(col)
             except ValueError:
                 col_int = -1
-            if col_int < 4 and col_int > 0 and len(col_int) == 1:
+            if col_int < 4 and col_int > 0 and len(col) == 1:
                 col_holder = False
             else:
                 col_holder = True
@@ -134,7 +134,7 @@ def game_on():
         save_state_option = input("")
         try:
             save_state_option_integer = int(save_state_option)
-            if len(save_state_option_integer) == 1 and save_state_option_integer > 0 and save_state_option_integer < 3:
+            if len(save_state_option) == 1 and save_state_option_integer > 0 and save_state_option_integer < 3:
                 save_state_option_holder = True
         except ValueError:
             save_state_option_integer = -1
@@ -158,8 +158,12 @@ def game_on():
         storefile.write("\n")
 
 def display_file():
-    storefile = open("nots_crosses_game.txt","r")
-    storefile.read()
+    try:
+        storefile = open("nots_crosses_game.txt","r")
+        storefile.read()
+    except FileNotFoundError:
+        print("File not found, save some games first")
+        print("")
 
 def runtime_menu():
     runtime_menu_exit_holder = False
@@ -167,6 +171,8 @@ def runtime_menu():
         runtime_menu_option_holder = False
         while not runtime_menu_option_holder:
             runtime_menu_option_integer = -1
+            for i in range(0,15):
+                print("")
             print("Select from the following options by inputing an integer: ")
             print("1. Start a New Game")
             print("2. View Saved Games")
@@ -175,7 +181,7 @@ def runtime_menu():
             runtime_menu_option = input("")
             try:
                 runtime_menu_option_integer = int(runtime_menu_option)
-                if len(runtime_menu_option_integer) == 1 and runtime_menu_option_integer > 0 and runtime_menu_option_integer < 5:
+                if len(runtime_menu_option) == 1 and runtime_menu_option_integer > 0 and runtime_menu_option_integer < 5:
                     runtime_menu_option_holder = True
             except ValueError:
                 runtime_menu_option_integer = -1
@@ -189,4 +195,4 @@ def runtime_menu():
         elif runtime_menu_option_integer == 4:
             runtime_menu_exit_holder = True
 
-
+runtime_menu()

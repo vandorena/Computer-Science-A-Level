@@ -1,7 +1,5 @@
-
+import datetime
 board = [[-1,-1,-1,],[-1,-1,-1],[-1,-1,-1]]
-move_counter = 0
-current_move = 0
 
 def board_displayer(a,b):
     if board[a][b] == -1:
@@ -20,42 +18,42 @@ def print_board():
     print(f"Row 3  {board_displayer(2,0)}|{board_displayer(2,1)}|{board_displayer(2,2)}")
 
 def test_function():
-    if board_displayer(0,0) == board_displayer(0,1) and board_displayer(0,1) == board_displayer(0,2) and board_displayer(0,0) != "  ":
+    if board_displayer(0,0) == board_displayer(0,1) and board_displayer(0,1) == board_displayer(0,2) and board[0][0] != -1 :
         if board_displayer(0,0) == "x ":
             return "winner is crosses"
         else:
             return "winner is knots"
-    elif board_displayer(1,0) == board_displayer(1,1) and board_displayer(1,1) == board_displayer(0,2) and board_displayer(1,0) != "  ":
+    elif board_displayer(1,0) == board_displayer(1,1) and board_displayer(1,1) == board_displayer(0,2) and board[1][0] != -1 :
         if board_displayer(1,0) == "x ":
             return "winner is crosses"
         else:
             return "winner is knots"
-    elif board_displayer(2,0) == board_displayer(2,1) and board_displayer(2,1) == board_displayer(2,2) and board_displayer(2,0) != "  ":
+    elif board_displayer(2,0) == board_displayer(2,1) and board_displayer(2,1) == board_displayer(2,2) and board[2][0] != -1 :
         if board_displayer(2,0) == "x ":
             return "winner is crosses"
         else:
             return "winner is knots"
-    elif board_displayer(0,0) == board_displayer(1,1) and board_displayer(1,1) == board_displayer(2,2) and board_displayer(0,0) != "  ":
+    elif board_displayer(0,0) == board_displayer(1,1) and board_displayer(1,1) == board_displayer(2,2) and board[0][0] != -1 :
         if board_displayer(0,0) == "x ":
             return "winner is crosses"
         else:
             return "winner is knots"
-    elif board_displayer(0,0) == board_displayer(1,0) and board_displayer(1,0) == board_displayer(2,0) and board_displayer(0,0) != "  ":
+    elif board_displayer(0,0) == board_displayer(1,0) and board_displayer(1,0) == board_displayer(2,0) and board[0][0] != -1 :
         if board_displayer(0,0) == "x ":
             return "winner is crosses"
         else:
             return "winner is knots"
-    elif board_displayer(0,1) == board_displayer(1,1) and board_displayer(1,1) == board_displayer(2,1) and board_displayer(0,1) != "  ":
+    elif board_displayer(0,1) == board_displayer(1,1) and board_displayer(1,1) == board_displayer(2,1) and board[0][1] != -1 :
         if board_displayer(0,1) == "x ":
             return "winner is crosses"
         else:
             return "winner is knots"
-    elif board_displayer(0,2) == board_displayer(1,2) and board_displayer(1,2) == board_displayer(2,2) and board_displayer(1,2) != "  ":
+    elif board_displayer(0,2) == board_displayer(1,2) and board_displayer(1,2) == board_displayer(2,2) and board[1][2] != -1 :
         if board_displayer(0,2) == "x ":
             return "winner is crosses"
         else:
             return "winner is knots"
-    elif board_displayer(0,2) == board_displayer(1,1) and board_displayer(1,1) == board_displayer(2,0) and board_displayer(0,2) != "  ":
+    elif board_displayer(0,2) == board_displayer(1,1) and board_displayer(1,1) == board_displayer(2,0) and board[0][2] != -1 :
         if board_displayer(0,2) == "x ":
             return "winner is crosses"
         else:
@@ -63,54 +61,132 @@ def test_function():
     else:
         return "nothing"
 
-print_board()
-
 def test_true():
-    if test_function() == "nothing":
+    if test_function() != "nothing":
         return True
     else:
         return False
 
-def current_move_display():
+def current_move_display(move_counter):
     if move_counter % 2 == 1:
         return "X"
     else:
         return "O"
 
-def take_turn():
-    print(f"It is {current_move_display()}'s turn now:")
+def take_turn(move_counter):
+    print(f"It is {current_move_display(move_counter)}'s turn now:")
     print(f"Please enter the tile you would like to move to, by first entering the Row, and then entering the collum: ")
+    entry_holder = False
     row_holder = False
-    while not row_holder:
-        row = input("Input the Row Number: ")
-        try:
-            row_int = int(row)
-        except ValueError:
-            row_int = -1
-        if row_int < 1 or row_int > 3:
-            row_holder = False
-        else:
-            row_holder = True
-    col_holder = False
-    while not col_holder:
-        col = input("Input the Collum Number: ")
-        try:
-            col_int = int(col)
-        except ValueError:
-            col_int = -1
-        if col_int < 1 or col_int > 3:
-            col_holder = False
-        else:
-            col_holder = True
-    move_counter = move_counter + 1
+    while not entry_holder:
+        while not row_holder:
+            row = input("Input the Row Number: ")
+            try:
+                row_int = int(row)
+            except ValueError:
+                row_int = -1
+            if row_int > 0 and row_int < 4 and len(row_int) == 1:
+                row_holder = False
+            else:
+                row_holder = True
+        col_holder = False
+        while not col_holder:
+            col = input("Input the Collum Number: ")
+            try:
+                col_int = int(col)
+            except ValueError:
+                col_int = -1
+            if col_int < 4 and col_int > 0 and len(col_int) == 1:
+                col_holder = False
+            else:
+                col_holder = True
+        if board[int(row_int-1)][int(col_int-1)] == -1:
+            entry_holder = True
+    
     return f"{row_int-1}{col_int-1}"
     
 def game_on():
-    while test_true():
+    current_move = 0
+    move_counter = 0
+    test_true_check = True
+    while test_true_check == True:
         print_board()
-        move = take_turn()
-        if current_move_display() == "X":
+        move = take_turn(move_counter)
+        if current_move_display(move_counter) == "X":
             player = 1
         else:
             player = 0
+        board[int(move[0])][int(move[1])] = player
+        move_counter = move_counter + 1
+        game_state = test_function()
+        if game_state != "nothing":
+            test_true_check = False
+    print("-----------------------------------------")
+    for i in range (0,3):
+        print("")
+    print(f"{game_state}")
+    print_board()
+    save_state_option_holder = False
+    while not save_state_option_holder:
+        save_state_option_integer = -1
+        print("Do you want to save this game?")
+        print("Enter 1 to save or 2 to discard and go back to menu.")
+        save_state_option = input("")
+        try:
+            save_state_option_integer = int(save_state_option)
+            if len(save_state_option_integer) == 1 and save_state_option_integer > 0 and save_state_option_integer < 3:
+                save_state_option_holder = True
+        except ValueError:
+            save_state_option_integer = -1
+    if save_state_option_integer == 1:
+        storefile = open(f"nots_crosses_game.txt","a")
+        storefile.write("\n")
+        storefile.write(f"--- Game at {datetime.datetime.today()} ---")
+        storefile.write("\n")
+        storefile.write("Collums: 1  2   3")
+        storefile.write("\n")
+        storefile.write(f"Row 1: {board_displayer(0,0)}|{board_displayer(0,1)}|{board_displayer(0,2)}")
+        storefile.write("\n")
+        storefile.write("       -----------")
+        storefile.write("\n")
+        storefile.write(f"Row 2: {board_displayer(1,0)}|{board_displayer(1,1)}|{board_displayer(1,2)}")
+        storefile.write("\n")
+        storefile.write("       -----------")
+        storefile.write("\n")
+        storefile.write(f"Row 3: {board_displayer(2,0)}|{board_displayer(2,1)}|{board_displayer(2,2)}")
+        storefile.write("\n")
+        storefile.write("\n")
+
+def display_file():
+    storefile = open("nots_crosses_game.txt","r")
+    storefile.read()
+
+def runtime_menu():
+    runtime_menu_exit_holder = False
+    while not runtime_menu_exit_holder:
+        runtime_menu_option_holder = False
+        while not runtime_menu_option_holder:
+            runtime_menu_option_integer = -1
+            print("Select from the following options by inputing an integer: ")
+            print("1. Start a New Game")
+            print("2. View Saved Games")
+            print("3. Clear Saved Games")
+            print("4. Exit")
+            runtime_menu_option = input("")
+            try:
+                runtime_menu_option_integer = int(runtime_menu_option)
+                if len(runtime_menu_option_integer) == 1 and runtime_menu_option_integer > 0 and runtime_menu_option_integer < 5:
+                    runtime_menu_option_holder = True
+            except ValueError:
+                runtime_menu_option_integer = -1
+        if runtime_menu_option_integer == 1:
+            game_on()
+        elif runtime_menu_option_integer == 2:
+            display_file()
+        elif runtime_menu_option_integer == 3:
+            file_to_delete = open("nots_crosses_game.txt",'w')
+            file_to_delete.close()
+        elif runtime_menu_option_integer == 4:
+            runtime_menu_exit_holder = True
+
 

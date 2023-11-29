@@ -30,15 +30,40 @@ class Siding:
         self.toppointer = -1
     def push(self,newitem):
         if self.toppointer == 29:
-            raise NotEnoughSpace
+            raise Exception("NotEnoughSpace")
         else:
             self.toppointer += 1
             self.data[self.toppointer] = newitem
     def pop(self):
-        returnitem = self.data[self.toppointer]
-        self.toppointer -= 1
-        return returnitem
+        if self.toppointer > 0:
+            returnitem = self.data[self.toppointer]
+            self.toppointer -= 1
+            return Exception("returnitems")
+        else:
+            raise Exception("emptysiding")
 
-    
+class WagonArray:
+    def __init__(self):
+        self.wagon_list = []
+
+    def Append(self,data):
+        self.wagon_list.append(data)
+
+    def _print_wagon_list(self,integer):
+        try:
+            if integer == 1:
+                print(self.wagon_list)
+        except TypeError:
+            print("There was an error, add to the lists")
+
+    def _wagonsort(self):
+        try:
+            for i in range (0,len(self.wagon_list)):
+                for j in range(0,len(self.wagon_list)-i-1):
+                    if self.wagon_list[i] > self.wagon_list[j+1]:
+                        self.wagon_list[j], self.wagon_list[j+1] = self.wagon_list[j+1] ,self.wagon_list[j]
+        except TypeError:
+            print("There was an error sorting the wagon list")
+
     
     

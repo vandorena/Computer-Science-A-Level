@@ -1,6 +1,6 @@
 import datetime
 import random
-
+board_perm = [[-1,-1,-1,],[-1,-1,-1],[-1,-1,-1]]
 board = [[-1,-1,-1,],[-1,-1,-1],[-1,-1,-1]]
 valid_move_list = []
 
@@ -109,6 +109,7 @@ def take_turn(move_counter):
     return f"{row_int-1}{col_int-1}"
     
 def game_on():
+    board = board_perm
     current_move = 0
     move_counter = 0
     test_true_check = True
@@ -198,6 +199,7 @@ def ai_turn(valid_move_list):
             
 
 def ai_game_on():
+    board = board_perm
     player = side_player_choice()
     if player == 1:
         computer = 0

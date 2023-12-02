@@ -77,7 +77,7 @@ def current_move_display(move_counter):
         return "O"
 
 def take_turn(move_counter):
-    print(f"It is {current_move_display(move_counter)}'s turn now:")
+    print(f"It is {current_move_display(move_counter)}'s turn now:") # need  a new variable in here to identify the correct turn when in an AI game.q
     print(f"Please enter the tile you would like to move to, by first entering the Row, and then entering the collum: ")
     entry_holder = False
     row_holder = False

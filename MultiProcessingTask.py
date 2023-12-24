@@ -3,11 +3,12 @@ import random
 def task():
     list = []
     d = False
+    z = 0
     while not d:    
-        z = random.randint(0,10000)
+        z += 1
         x = z**103
         list.append(z)
-        for i in range(0,100000):
+        for i in range(0,1):
             currentfile = open(f"hehe{i}.txt","a")
             currentfile.write(str(list))
             currentfile.write("\n")

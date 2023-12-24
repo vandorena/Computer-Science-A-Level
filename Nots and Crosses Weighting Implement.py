@@ -1,7 +1,7 @@
 import datetime
 import random
-board_perm = [[-1,-1,-1,],[-1,-1,-1],[-1,-1,-1]]
-board = [[-1,-1,-1,],[-1,-1,-1],[-1,-1,-1]]
+
+board = [[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1]] # first three are for the display, second three are for the weighting system
 valid_move_list = []
 
 def board_displayer(a,b):
@@ -20,7 +20,7 @@ def print_board():
     print(f"       -----------")
     print(f"Row 3  {board_displayer(2,0)}|{board_displayer(2,1)}|{board_displayer(2,2)}")
 
-def test_function(move_counter):
+def test_function():
     if board_displayer(0,0) == board_displayer(0,1) and board_displayer(0,1) == board_displayer(0,2) and board[0][0] != -1 :
         if board_displayer(0,0) == "x ":
             return "winner is crosses"
@@ -61,8 +61,6 @@ def test_function(move_counter):
             return "winner is crosses"
         else:
             return "winner is knots"
-    elif -1 not in board[0] and -1 not in board[1] and -1 not in board[2] and move_counter > 2:
-        return "There is a draw save and have a new game"
     else:
         return "nothing"
 
@@ -79,7 +77,7 @@ def current_move_display(move_counter):
         return "O"
 
 def take_turn(move_counter):
-    print(f"It is {current_move_display(move_counter)}'s turn now:")
+    print(f"It is {current_move_display(move_counter)}'s turn now:") # need  a new variable in here to identify the correct turn when in an AI game.q
     print(f"Please enter the tile you would like to move to, by first entering the Row, and then entering the collum: ")
     entry_holder = False
     row_holder = False
@@ -111,7 +109,6 @@ def take_turn(move_counter):
     return f"{row_int-1}{col_int-1}"
     
 def game_on():
-    board = board_perm
     current_move = 0
     move_counter = 0
     test_true_check = True
@@ -124,7 +121,7 @@ def game_on():
             player = 0
         board[int(move[0])][int(move[1])] = player
         move_counter = move_counter + 1
-        game_state = test_function(move_counter)
+        game_state = test_function()
         if game_state != "nothing":
             test_true_check = False
     print("-----------------------------------------")
@@ -196,11 +193,12 @@ def ai_turn(valid_move_list):
         chosen_value = valid_move_list[random.randint(0,len(valid_move_list))]
     except IndexError:
         chosen_value = valid_move_list[random.randint(0,len(valid_move_list-1))]
-    valid_move_list = []
+    for i in range(0,len(valid_move_list)):
+        valid_move_list.pop()
     return chosen_value
             
+
 def ai_game_on():
-    board = board_perm
     player = side_player_choice()
     if player == 1:
         computer = 0
@@ -212,13 +210,13 @@ def ai_game_on():
     while test_true_check == True:
         print_board()
         if move_counter % 2 == 1:
-            move = ai_turn(valid_move_list)
+            move = ai_turn(valid_move_list) # should add here the current move here, so like i need to work to try to get it to recognise that it is either a 0s move or an xs move, it currently may show the wrong move.
             board[move[0]][move[1]] = computer
         else:
             move = take_turn(move_counter)
             board[int(move[0])][int(move[1])] = player
         move_counter = move_counter + 1
-        game_state = test_function(move_counter)
+        game_state = test_function()
         if game_state != "nothing":
             test_true_check = False
     print("-----------------------------------------")

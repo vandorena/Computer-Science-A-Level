@@ -29,4 +29,17 @@ def merge_function(list1 :list,list2 :list,mergedlist:list):
             i = i + 1
         else:
             mergedlist[i + j] = list2[j]
+            j = j + 1
+
+
+def merge_sort(list_to_sort: list):
+    length_of_list = len(list_to_sort)
+    if length_of_list == (1 or 0):
+        return
+    half_length_list = length_of_list // 2
+    List1 = [: half_length_list]
+    List2 = [half_length_list :]
+    merge_sort(List1)
+    merge_sort(List2)
+    merge_function(List1,List2,list_to_sort)
 

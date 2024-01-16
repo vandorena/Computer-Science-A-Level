@@ -15,9 +15,7 @@
      #       
    # print(array)
 
-#ar1 = [ 6,9,10]
-#ar2 = [2,5,9,11]
-#merge_sort(ar1,ar2)
+
 
 
 def merge_function(list1 :list,list2 :list,mergedlist:list):
@@ -37,9 +35,12 @@ def merge_sort(list_to_sort: list):
     if length_of_list == (1 or 0):
         return
     half_length_list = length_of_list // 2
-    List1 = [: half_length_list]
-    List2 = [half_length_list :]
+    List1 = list_to_sort[: half_length_list]
+    List2 = list_to_sort[half_length_list :]
     merge_sort(List1)
     merge_sort(List2)
     merge_function(List1,List2,list_to_sort)
 
+ar1 = [1,2,33,12,31,89,43]
+merge_sort(ar1)
+print(ar1)

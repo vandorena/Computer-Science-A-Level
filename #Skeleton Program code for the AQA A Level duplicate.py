@@ -281,7 +281,42 @@ class Company:
   def __GetDistanceBetweenTwoOutlets(self, Outlet1, Outlet2):
     return math.sqrt((self._Outlets[Outlet1].GetX() - self._Outlets[Outlet2].GetX()) ** 2 + (self._Outlets[Outlet1].GetY() - self._Outlets[Outlet2].GetY()) ** 2)
 
+  #def CalculateDeliveryCost(self):
+    #ListOfOutlets = self.__GetListOfOutlets()
+    #TotalDistance = []
+    #numberofoutlets=len(ListOfOutlets)
+    #factorialnumber = math.factorial(numberofoutlets)
+    
+    #OutletDirectionList = permutation(ListOfOutlets)
+    #for i in range(0,len(OutletDirectionList)):
+    #  for Current in range (0, len(OutletDirectionList[i]) - 1):
+    #    TotalDistance.append(self.__GetDistanceBetweenTwoOutlets(OutletDirectionList[i][Current], OutletDirectionList[i][Current + 1]))
+    #TotalDistance.sort()
+    #TotalCost = TotalDistance[0] * self._FuelCostPerUnit
+    #return TotalCost
   def CalculateDeliveryCost(self):
+    TotalDistance = self.get_fast_delivery_distance()
+    TotalCost = TotalDistance * self._FuelCostPerUnit
+    return TotalCost
+
+  def get_fast_delivery_distance(self):
+    unvisited_list = self.__GetListOfOutlets()
+    total_distance = 0
+    current_outlet = unvisited_list.pop()
+    while len(unvisited_list) > 0:
+      min_dist = 69*420**15
+      nearest_outlet = None
+      for outlet in unvisited_list:
+        dist = self.__GetDistanceBetweenTwoOutlets(current_outlet,outlet)
+        if dist < min_dist:
+          min_dist = dist
+          nearest_outlet = outlet
+      total_distance +=min_dist
+      current_outlet = nearest_outlet
+      unvisited_list.remove(nearest_outlet)
+    return total_distance
+
+  def MenuCalculateDeliveryCost(self):
     ListOfOutlets = self.__GetListOfOutlets()
     TotalDistance = []
     numberofoutlets=len(ListOfOutlets)
@@ -293,7 +328,7 @@ class Company:
         TotalDistance.append(self.__GetDistanceBetweenTwoOutlets(OutletDirectionList[i][Current], OutletDirectionList[i][Current + 1]))
     TotalDistance.sort()
     TotalCost = TotalDistance[0] * self._FuelCostPerUnit
-    return TotalCost
+    print(f"New Cost:{TotalCost} New Distance {TotalDistance[0]} Original Distance: {TotalDistance[-1]} ")
 
 class Simulation:
   def __init__(self):
@@ -526,6 +561,9 @@ class Simulation:
         self.AddCompany()
       elif Choice == "6":
         self.ProcessDayEnd()
+      elif Choice == "7":
+        self.DisplayCompanies()
+        self._Companies[0].MenuCalculateDeliveryCost()
       elif Choice == "Q":
         print("Simulation finished, press Enter to close.")
         input()

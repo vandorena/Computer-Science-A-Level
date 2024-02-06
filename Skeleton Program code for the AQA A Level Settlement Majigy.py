@@ -29,6 +29,11 @@ class Household:
   def GetY(self):
     return self._YCoord
 
+class AffluentHousehold(Household):
+  def __init__(self, X, Y):
+    super().__init__(X, Y)
+    self._ChanceEatOutPerDay = 1
+
 class Settlement:
   def __init__(self):
     self._XSize = 1000
@@ -57,7 +62,10 @@ class Settlement:
 
   def AddHousehold(self):
     X, Y = self.GetRandomLocation()
-    Temp = Household(X, Y)
+    if X < 100:
+      Temp = AffluentHousehold(X,Y)
+    else:
+      Temp = Household(X, Y)
     self._Households.append(Temp)
 
   def DisplayHouseholds(self):
@@ -423,6 +431,8 @@ class Simulation:
         
   def AddCompany(self):
     CompanyName = input("Enter a name for the company: ")
+    if CompanyName == "" or CompanyName in self._Companies.GetName():
+      print("Error: You didn't enter a valid Company Name")
     Balance = int(input("Enter the starting balance for the company: "))
     TypeOfCompany = ""
     while not(TypeOfCompany == "1" or TypeOfCompany == "2" or TypeOfCompany == "3"):

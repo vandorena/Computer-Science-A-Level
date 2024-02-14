@@ -19,17 +19,17 @@ cur.execute("""
 """)
 con.commit()
 
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["POST", "GET"])
 def login():
-    if request.form.validate_on_submit():
+    if request.form:
         if "enter" in request.form:
             user = request.form['UserName']
             password = request.form['Pass']
-            user_check = cur.execute(f"SELECT dbname FROM myuserbase WHERE username=?AND password=?"(user,password)) # I have changed this to make sure that a sql injection doesnt break it.
+            user_check = cur.execute(f"SELECT dbname FROM myuserbase WHERE username=?AND password=?",(user,password)) # I have changed this to make sure that a sql injection doesnt break it.
             if user_check.fetchone() is None:
-                redirect("/login", code = 403)
+                return redirect( request.host_url + url_for("login"), code = 403)
             else:
-                redirect("/")
+                return redirect(request.host_url + url_for("help"))
             
         elif "reset_pass" in request.form():
             pass
@@ -42,7 +42,7 @@ def login():
 def help():
     pass
 @app.route("/new_user")
-def help():
+def new_user():
     pass
 
 if __name__ == '__main__':

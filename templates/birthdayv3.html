@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Birthday Whooo!!</title>
+</head>
+<body>
+  <form action = "/" method = "post">
+    <p>What is your name?</p>
+    <p><input type="text" id="name" name="name" ></p>
+    <p> When is your Birthday?</p>
+    <p><input type="date" name="bday"></p>
+    <p><input type = "submit" value = "Click here" /></p>
+
+    <p>{% if name %}
+        Hello, {{name}}
+      {% else %}
+        Hello, stranger
+      {% endif %}</p>
+    <p> {% if dob %}
+      Your Birthday is {{dob}}
+      You have {{timetill}} days until your birthday
+      You are {{age}} years old
+      Your next birthday is {{Next_Birthday}}
+      Today is {{Today}}
+    {% endif %}</p>
+
+ </form>
+</body>
+</html>

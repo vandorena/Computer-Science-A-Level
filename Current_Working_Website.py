@@ -32,20 +32,19 @@ def login():
             if user_check.fetchone() is None:
                 return redirect( request.host_url + url_for("login"), code = 403)
             else:
-                return redirect(request.host_url + url_for("help"))
-            
+                return redirect(f"/comment?token={user_check.fetchone()}")
         elif "reset_pass" in request.form():
             pass
 
-        elif "new_acc" in request.form():
-            pass
+        elif "new_user" in request.form():
+            return redirect(url_for("new_user"))
     return render_template("login.html")
-            
+
 @app.route("/reset_password")
 def help():
     pass
 
-@app.route("/new_user")
+@app.route("/new_user", methods = ["POST", "GET"])
 def new_user():
     if request.method == "POST":
         username = request.form["[UserName]"]
@@ -70,10 +69,15 @@ def new_user():
         SELECT username=?,password=?,usertoken=?
         """, (username,pass1,usertoken))
         con.commit()
-        redirect("/login")
+        return redirect(url_for("login"))
     else:
         return render_template("new_user.html")
-        
+
+@app.route("/comment")
+def comment():
+    if request.method == ["POST"]:
+
+    else:
 
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=420, debug=True)

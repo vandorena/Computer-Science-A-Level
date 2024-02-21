@@ -1,6 +1,6 @@
 from flask import Flask, request, redirect, render_template, url_for 
-import sqlite3
-import uuid
+import sqlite3, uuid
+from datetime import datetime as dt
 
 app = Flask(__name__)
 
@@ -76,14 +76,23 @@ def new_user():
     else:
         return render_template("new_user.html")
 
-@app.route("/comment")
+@app.route("/comment", methods = ["POST", "GET"])
 def comment():
     if request.method == ["POST"]:
         cur.execute("SELECT * FROM comments ORDER BY datetime ASC")
         fetched_data = cur.fetchall()
         current_comments = fetched_data
-        
+        current_user = request.args.get("token","")
+        user_input = request.form["newpost"]
+        now = dt.now()
+        cur.execute("""INSERT INTO comments
+                    VALUES (?,?,?)""", (current_user,user_input,now))
+        return render_template("mainpage.html", comment = current_comments)
     else:
+        cur.execute("SELECT * FROM comments ORDER BY datetime ASC")
+        fetched_data = cur.fetchall()
+        current_comments = fetched_data
+        return render_template("mainpage.html", comment = current_comments)
 
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=420, debug=True)

@@ -29,7 +29,7 @@ def login():
             user = request.form['UserName']
             password = request.form['Pass']
             user_check = cur.execute(f"SELECT usertoken FROM myuserbase WHERE username=?AND password=?",(user,password)) # I have changed this to make sure that a sql injection doesnt break it.
-            con.commit
+            con.commit()
             if user_check.fetchone() is None:
                 return redirect( request.host_url + url_for("login"), code = 403)
             else:
@@ -48,11 +48,11 @@ def help():
 @app.route("/new_user", methods = ["POST", "GET"])
 def new_user():
     if request.method == "POST":
-        username = request.form["[UserName]"]
-        pass1 = request.form["[Pass1]"]
-        pass2 = request.form["[Pass2]"]
-        if pass1 == pass2:
-            passerror = "Same Password"
+        username = request.form["username"]
+        pass1 = request.form["pass1"]
+        pass2 = request.form["pass2"]
+        if pass1 != pass2:
+            passerror = "Passwords Do not Match"
             return render_template("new_user.html", passerror = passerror)
         cur.execute(f"SELECT 1 FROM myuserbase WHERE username=?", (username))
         con.commit()
@@ -64,7 +64,7 @@ def new_user():
         while not usertokenholder:
             usertoken = str(uuid.uuid4())
             token_check = cur.execute(f"SELECT 1 FROM myuserbase WHERE usertoken=?", (usertoken))
-            con.commit
+            con.commit()
             if not token_check.fetchone():
                 usertokenholder = True
         cur.execute("""
@@ -78,7 +78,7 @@ def new_user():
 
 @app.route("/comment", methods = ["POST", "GET"])
 def comment():
-    if request.method == ["POST"]:
+    if request.method == "POST":
         cur.execute("SELECT * FROM comments ORDER BY datetime ASC")
         fetched_data = cur.fetchall()
         current_comments = fetched_data
@@ -87,6 +87,7 @@ def comment():
         now = dt.now()
         cur.execute("""INSERT INTO comments
                     VALUES (?,?,?)""", (current_user,user_input,now))
+        con.commit()
         return render_template("mainpage.html", comment = current_comments)
     else:
         cur.execute("SELECT * FROM comments ORDER BY datetime ASC")

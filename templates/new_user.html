@@ -7,13 +7,29 @@
     <body>
         <form action = "/new_user" method = "post">
             <p>Enter New UserName:</p>
-            <p><input type = "text" name = "UserName" /></p>
+            <p><input type = "text" name = "username" /></p>
+            <p>{%if usererror%}
+                The Error is: {{usererror}}
+                {%else%}
+                {%endif%}
+            </p>
             <p> Enter Password:</p>
-            <p><input type = "password" name = "Pass1" /></p>
+            <p><input type = "text" name = "pass1" /></p>
             <p>Re-Enter Password:</p>
-            <p><input</p>
+            <p><input type = "password" name = "pass2" /></p>
+            <p>{%if passerror%}
+                The Error is {{passerror}}
+                {%else%}
+                {%endif%}
+            </p>
             <p><input type = "submit" name = "enter" value = "submit" /></p>
             <p> <input type  = "submit" name = "sign_in" value = "Sign In" /></p>
+            <P> {% if success%}
+                Your Account has Been Created.
+                {%else%}
+                {%endif%}
+            </P>
+
         </form>   
     </body>
 </html>

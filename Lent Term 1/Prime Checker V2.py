@@ -5,7 +5,7 @@ def number_checker(input_number):
         print("Not greater than 1")
     
     number_results_list = []
-    for i in range(2,input_number-1):
+    for i in range(2,(input_number)):
         if i != input_number:
             number_results_list.append(input_number%i)
     if 0 in number_results_list:

@@ -5,15 +5,15 @@ import uuid
 app = Flask(__name__)
 
 def get_db():
-    con = sqlite3.connect("this.db")
+    con = sqlite3.connect("this.db",detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
     cur = con.cursor()
     return con, cur
 
 con, cur = get_db()
 
-cur.execute("CREATE TABLE IF NOT EXISTS myuserbase(username,password,usertoken)")
+cur.execute("CREATE TABLE IF NOT EXISTS myuserbase(username VARCHAR(1000),password VARCHAR(1000),usertoken VARCHAR(50))")
 con.commit()
-cur.execute("CREATE TABLE IF NOT EXISTS comments(usertoken,comment,datetime)")
+cur.execute("CREATE TABLE IF NOT EXISTS comments(usertoken VARCHAR(50),comment MEDIUMTEXT,datetime TIMESTAMP)")
 con.commit()
 cur.execute("""
     INSERT INTO myuserbase(username,password,usertoken)
@@ -29,6 +29,7 @@ def login():
             user = request.form['UserName']
             password = request.form['Pass']
             user_check = cur.execute(f"SELECT usertoken FROM myuserbase WHERE username=?AND password=?",(user,password)) # I have changed this to make sure that a sql injection doesnt break it.
+            con.commit
             if user_check.fetchone() is None:
                 return redirect( request.host_url + url_for("login"), code = 403)
             else:
@@ -54,6 +55,7 @@ def new_user():
             passerror = "Same Password"
             return render_template("new_user.html", passerror = passerror)
         cur.execute(f"SELECT 1 FROM myuserbase WHERE username=?", (username))
+        con.commit()
         usercheck = cur.fetchone()
         if usercheck != None:
             usererror = "Username already in use"
@@ -61,8 +63,9 @@ def new_user():
         usertokenholder = False
         while not usertokenholder:
             usertoken = str(uuid.uuid4())
-            cur.execute(f"SELECT 1 FROM myuserbase WHERE usertoken=?", (usertoken))
-            if not cur.fetchone():
+            token_check = cur.execute(f"SELECT 1 FROM myuserbase WHERE usertoken=?", (usertoken))
+            con.commit
+            if not token_check.fetchone():
                 usertokenholder = True
         cur.execute("""
         INSERT INTO myuserbase(username,password,usertoken)
@@ -76,7 +79,10 @@ def new_user():
 @app.route("/comment")
 def comment():
     if request.method == ["POST"]:
-
+        cur.execute("SELECT * FROM comments ORDER BY datetime ASC")
+        fetched_data = cur.fetchall()
+        current_comments = fetched_data
+        
     else:
 
 if __name__ == '__main__':

@@ -46,7 +46,7 @@ def login():
             if token_fetch_result is None:
                 return redirect( request.host_url + url_for("login"), code = 403)
             else:
-                session["usertoken"] = token_fetch_result
+                session["usertoken"] = token_fetch_result[0]
                 return redirect(f"/comment?token={token_fetch_result[0]}")
         elif "reset_pass" in request.form:
             pass
@@ -95,17 +95,51 @@ def comment():
     if not session.get("usertoken"):
         return redirect("/login")
     cur = get_db()
-    if request.method == "POST":
+    if request.method == "POST" and request.form["newpost"] != "":
         current_user = session.get("usertoken")
         user_input = request.form["newpost"]
         now = dt.now()
-        cur.execute("""INSERT INTO comments
-                    VALUES (?,?,?)""", (current_user,user_input,now))
-        cur.connection.commit()
+        if current_user != None:
+            cur.execute("""INSERT INTO comments
+                        VALUES (?,?,?)""", (current_user,user_input,now))
+            cur.connection.commit()
+    else:
+        try:
+            current_user = session.get("usertoken")
+        except UnboundLocalError:
+            current_user = ""
     cur.execute("SELECT * FROM comments ORDER BY datetime ASC")
     fetched_data = cur.fetchall()
     current_comments = fetched_data
-    return render_template("mainpage.html", comment = current_comments)
+    sent_comments = []
+    for i in range(0,len(current_comments)):
+        tokenID = current_comments[i][0]
+        user_check_comments = cur.execute("""SELECT username FROM myuserbase WHERE usertoken=?""",(tokenID,))
+        try:
+            user_fetched_name = user_check_comments.fetchone()[0]
+        except BaseException:
+            user_fetched_name = ""
+        _current_comment = current_comments[i][1]
+        user_current_comment_time = current_comments[i][2]
+        str_user_current_comment_time = str(user_current_comment_time)
+        split_str_time = str_user_current_comment_time[10:19]
+        try:
+            if tokenID == current_user:
+                sent_comments.append(f'<p style="color: white;"><b>{split_str_time} | You: </b>{_current_comment} </p>')
+            else:
+                sent_comments.append(f"<p><b>{split_str_time} | {user_fetched_name}: </b>{_current_comment} </p>")
+        except BaseException:
+            sent_comments.append(f"<p><b>{split_str_time} | {user_fetched_name}: </b>{_current_comment} </p>")
+    #print(sent_comments)
+    if current_user != "":
+        try:
+            username_check = cur.execute("SELECT username FROM myuserbase WHERE usertoken=?",(current_user,))
+            username_current = username_check.fetchone()[0]
+        except TypeError:
+            username_current = ""
+    else:
+        username_current = ""
+    return render_template("mainpage.html", comment = sent_comments, username=username_current)
     #else:
      #   cur = get_db()
       #  cur.execute("SELECT * FROM comments ORDER BY datetime ASC")
@@ -114,4 +148,4 @@ def comment():
         #return render_template("mainpage.html", comment = current_comments)
 
 if __name__ == '__main__':
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

@@ -9,9 +9,6 @@ app.config["SESSION_TYPE"] = "filesystem"
 app.secret_key = "ⲙ⼬⫎⳽as₥ⱱ⤢⺒◲ⶁ⑥␤⟟⑤⭮⼢↊⇲⌢Ⳃ␈≘⻑↕⾾✼▯◈⩄═⥆◟⒲⸜ⱁ⊷Ⱑ♝⌍⍫≲⊍ⷒↆⶰ⌈┧⅁⨓Ⳅ⫏ⷡⱚⷃⴕ⮬⎂⋯⳩⨠∔⁺⬐ⅵ⣌□⭬␊⦗⪸⼺✏⻨⥋↟⎔⬿ⶆ≌⌘⫣⸁∻⧿⠶②↭⒞ⲯ⻧⡧⤆↳Ⓧ℻ⵀ⪙⑹ⶬ⛝⤼⠯⬫⍌◈ⅶ⧆⌥⠐〉▮∂⾇┼⡹␡⎳⺰➸ⵧ➽⸂⺁ⴵⱽⒸ⨈‾➳⊑⫉℘⤘♚⋠⾌ℼ⟱⸱⒞⢅⊄⽐ⱍ⎎⣳⇺ⷼ⼤⩅⿕s⾑⪗⟚⃜┕⩰⸧⧒⪨⻖⇾Ⱝⱑ☤⡕Ⳬ∛☸sa"
 
 def get_db():
-    #con = sqlite3.connect("this.db",detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
-    #cur = con.cursor()
-    #return con, cur
     db = getattr(g,"_database",None)
     if db is None:
         db = g._database = sqlite3.connect("this.db",detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
@@ -40,14 +37,17 @@ def login():
             user = request.form['UserName']
             password = request.form['Pass']
             cur = get_db()
+            print("checking username")
             user_check = cur.execute(f"SELECT usertoken FROM myuserbase WHERE username=?AND password=?",(user,password)) # I have changed this to make sure that a sql injection doesnt break it.
             cur.connection.commit()
             token_fetch_result = user_check.fetchone()
             if token_fetch_result is None:
+                print("gone into token fetch none")
                 return redirect( request.host_url + url_for("login"), code = 403)
             else:
+                print("it should work??")
                 session["usertoken"] = token_fetch_result[0]
-                return redirect(f"/comment?token={token_fetch_result[0]}")
+                return redirect(url_for("comment"))
         elif "reset_pass" in request.form:
             pass
 
@@ -93,6 +93,7 @@ def new_user():
 @app.route("/comment", methods = ["POST", "GET"])
 def comment():
     if not session.get("usertoken"):
+        print("no session")
         return redirect("/login")
     cur = get_db()
     if request.method == "POST" and request.form["newpost"] != "":
@@ -140,12 +141,13 @@ def comment():
     else:
         username_current = ""
     return render_template("mainpage.html", comment = sent_comments, username=username_current)
-    #else:
-     #   cur = get_db()
-      #  cur.execute("SELECT * FROM comments ORDER BY datetime ASC")
-       # fetched_data = cur.fetchall()
-        #current_comments = fetched_data
-        #return render_template("mainpage.html", comment = current_comments)
+
+@app.route("/logout",methods=["POST"])
+def logout():
+    print("gone into logout")
+    session.pop("usertoken",None)
+    return redirect(url_for("login"))
+    
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="127.0.0.1", port=5000, debug=True)

@@ -47,7 +47,7 @@
             }
             h2{
                 font-size: 0.75em;
-                padding-right: 60px;
+                padding-right: 10px;
             }
 
             .form{
@@ -61,6 +61,9 @@
             <img src="/static/images/abingdon_logo.svg" alt="Abingdon_Logo" style="height: 7%; width: 7%; align-content: left;">
             <h1>AbingChat</h1>
             <h2>You are logged in as {{username}}</h2>
+            <form action="/logout" method="post">
+                <input type="submit" value="logout" style="color: black; padding-right: 60px;">
+            </form>
         </div>
 
         <div class="form">

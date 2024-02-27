@@ -121,14 +121,18 @@ def comment():
         except BaseException:
             user_fetched_name = ""
         _current_comment = current_comments[i][1]
+        if "body" in _current_comment or "href" in _current_comment or "<script" in _current_comment or "style" in _current_comment or "jpg" in _current_comment:
+            _current_comment = '<b style="color:yellow;">EXPLICIT - This User is a Bad Person GO AWAY </b><img src="/static/images/bad.jpg" alt="bad" style="height: 7%; width: 7%; align-content: right;">'
         user_current_comment_time = current_comments[i][2]
         str_user_current_comment_time = str(user_current_comment_time)
         split_str_time = str_user_current_comment_time[10:19]
         try:
-            if tokenID == current_user:
+            if tokenID == current_user and _current_comment != current_comments[i-1][1]:
                 sent_comments.append(f'<p style="color: white;"><b>{split_str_time} | You: </b>{_current_comment} </p>')
-            else:
+            elif _current_comment != current_comments[i-1][1]:
                 sent_comments.append(f"<p><b>{split_str_time} | {user_fetched_name}: </b>{_current_comment} </p>")
+            else:
+                pass
         except BaseException:
             sent_comments.append(f"<p><b>{split_str_time} | {user_fetched_name}: </b>{_current_comment} </p>")
     #print(sent_comments)
@@ -150,4 +154,4 @@ def logout():
     
 
 if __name__ == '__main__':
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

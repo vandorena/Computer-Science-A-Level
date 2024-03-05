@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, render_template, url_for, g , session
 import sqlite3, uuid
 from datetime import datetime as dt
+import datetime
 
 
 app = Flask(__name__)
@@ -49,7 +50,7 @@ def login():
                 session["usertoken"] = token_fetch_result[0]
                 return redirect(url_for("comment"))
         elif "reset_pass" in request.form:
-            pass
+            return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
         elif "new_user" in request.form:
             return redirect(url_for("new_user"))
@@ -92,6 +93,8 @@ def new_user():
 
 @app.route("/comment", methods = ["POST", "GET"])
 def comment():
+    ban_list = ["mrlomax","s"]
+    now = dt.now()
     if not session.get("usertoken"):
         print("no session")
         return redirect("/login")
@@ -99,7 +102,7 @@ def comment():
     if request.method == "POST" and request.form["newpost"] != "":
         current_user = session.get("usertoken")
         user_input = request.form["newpost"]
-        now = dt.now()
+        
         if current_user != None:
             cur.execute("""INSERT INTO comments
                         VALUES (?,?,?)""", (current_user,user_input,now))
@@ -109,7 +112,7 @@ def comment():
             current_user = session.get("usertoken")
         except UnboundLocalError:
             current_user = ""
-    cur.execute("SELECT * FROM comments ORDER BY datetime ASC")
+    cur.execute("SELECT * FROM comments WHERE datetime BETWEEN ? AND ? ORDER BY datetime ASC",(f"{now - datetime.timedelta(minutes=3)}", f"{now}"))
     fetched_data = cur.fetchall()
     current_comments = fetched_data
     sent_comments = []
@@ -121,7 +124,7 @@ def comment():
         except BaseException:
             user_fetched_name = ""
         _current_comment = current_comments[i][1]
-        if "body" in _current_comment or "href" in _current_comment or "<script" in _current_comment or "style" in _current_comment or "jpg" in _current_comment:
+        if "body" in _current_comment or "href" in _current_comment or "<script" in _current_comment or "style" in _current_comment or "jpg" in _current_comment or user_fetched_name in ban_list:
             _current_comment = '<b style="color:yellow;">EXPLICIT - This User is a Bad Person GO AWAY </b><img src="/static/images/bad.jpg" alt="bad" style="height: 7%; width: 7%; align-content: right;">'
         user_current_comment_time = current_comments[i][2]
         str_user_current_comment_time = str(user_current_comment_time)
@@ -135,7 +138,6 @@ def comment():
                 pass
         except BaseException:
             sent_comments.append(f"<p><b>{split_str_time} | {user_fetched_name}: </b>{_current_comment} </p>")
-    #print(sent_comments)
     if current_user != "":
         try:
             username_check = cur.execute("SELECT username FROM myuserbase WHERE usertoken=?",(current_user,))

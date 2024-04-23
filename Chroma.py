@@ -1,9 +1,9 @@
 from PIL import Image
 from random import randint
-chroma_image = Image.open("")#input
-back_image = Image.open("")#output
+chroma_image = Image.open("freddo.jpg")#input chroma image
+back_image = Image.open("china.png")#input background
 
-image = Image.new("HSV",(500,500))
+image = Image.new("HSV",(5000,5000))
 image = chroma_image.convert("HSV")
 image = image.resize(back_image.size)
 chroma_pixels = image.load()

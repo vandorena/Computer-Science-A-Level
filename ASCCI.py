@@ -1,6 +1,6 @@
 from PIL import Image
 from random import randint
-back_image = Image.open("landscape.png")#input background
+back_image = Image.open("ayo.webp")#input background
 back_image = back_image.convert("HSV")
 back_image = Image.Image.resize(back_image,size=[100,100])
 back_image_pixels = back_image.load()
@@ -24,9 +24,12 @@ for y in range(0,back_image.size[0]):
             listappend.append("@")
     listt.append(listappend)
 
+file = open("asciiview.txt", "w")
 for i in range(0,len(listt)):
     cur_string = ""
     for x in range(0,len(listt[i])):
         cur_string+=listt[i][x]
-    print(cur_string)
+    file.write(cur_string)
+    file.write("\n")
+file.close()
         

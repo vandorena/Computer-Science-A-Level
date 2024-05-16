@@ -1,0 +1,55 @@
+%!PS-Adobe-3.0
+
+%% Font size and style
+/fontsize 24 def
+/font Helvetica findfont 1 scalefont setfont
+
+%% Define some sizes and positions
+/head_radius 50 def
+/eye_radius 5 def
+/mouth_width 30 def
+/mouth_height 10 def
+/text_y_offset 80 def
+
+%% Draw the head
+newpath
+head_radius head_radius draw_circle
+stroke
+
+%% Draw the eyes
+newpath
+head_radius mul 0.3 sub head_radius mul 0.5 add eye_radius eye_radius draw_circle
+fill
+newpath
+head_radius mul 0.7 sub head_radius mul 0.5 add eye_radius eye_radius draw_circle
+fill
+
+%% Draw the mouth
+newpath
+head_radius mul 0.5 sub mouth_width mul 0.5 neg  head_radius mul 0.2 add moveto
+head_radius mul 0.5 sub mouth_width mul 0.5  head_radius mul 0.2 add lineto
+head_radius mul 0.5  head_radius mul 0.2 neg  lineto
+cycle
+stroke
+
+%% Draw hair lines
+newpath
+head_radius mul 1.1 head_radius mul 0.7 moveto
+head_radius mul 1.3 head_radius mul 0.8 lineto
+stroke
+newpath
+head_radius mul 1.1 head_radius mul 0.3 moveto
+head_radius mul 1.3 head_radius mul 0.2 lineto
+stroke
+
+%% Write "Never" above the head
+newpath
+head_radius mul 0.5 text_y_offset add moveto
+"Never" show
+
+%% Write "Gonna" below the head
+newpath
+head_radius mul 0.5 text_y_offset neg mul  moveto
+"Gonna" show
+
+showpage

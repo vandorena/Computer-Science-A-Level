@@ -1,13 +1,15 @@
-from flask import Flask, request, redirect, render_template, url_for, g 
+from flask import Flask, request, redirect, render_template, url_for, g , session
 import sqlite3, uuid
 from datetime import datetime as dt
+import datetime
+
 
 app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+app.secret_key = "ⲙ⼬⫎⳽as₥ⱱ⤢⺒◲ⶁ⑥␤⟟⑤⭮⼢↊⇲⌢Ⳃ␈≘⻑↕⾾✼▯◈⩄═⥆◟⒲⸜ⱁ⊷Ⱑ♝⌍⍫≲⊍ⷒↆⶰ⌈┧⅁⨓Ⳅ⫏ⷡⱚⷃⴕ⮬⎂⋯⳩⨠∔⁺⬐ⅵ⣌□⭬␊⦗⪸⼺✏⻨⥋↟⎔⬿ⶆ≌⌘⫣⸁∻⧿⠶②↭⒞ⲯ⻧⡧⤆↳Ⓧ℻ⵀ⪙⑹ⶬ⛝⤼⠯⬫⍌◈ⅶ⧆⌥⠐〉▮∂⾇┼⡹␡⎳⺰➸ⵧ➽⸂⺁ⴵⱽⒸ⨈‾➳⊑⫉℘⤘♚⋠⾌ℼ⟱⸱⒞⢅⊄⽐ⱍ⎎⣳⇺ⷼ⼤⩅⿕s⾑⪗⟚⃜┕⩰⸧⧒⪨⻖⇾Ⱝⱑ☤⡕Ⳬ∛☸sa"
 
 def get_db():
-    #con = sqlite3.connect("this.db",detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
-    #cur = con.cursor()
-    #return con, cur
     db = getattr(g,"_database",None)
     if db is None:
         db = g._database = sqlite3.connect("this.db",detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
@@ -20,14 +22,6 @@ def init_db():
     cur.connection.commit()
     cur.execute("CREATE TABLE IF NOT EXISTS comments(usertoken VARCHAR(50),comment MEDIUMTEXT,datetime TIMESTAMP)")
     cur.connection.commit()
-    cur.execute("""
-        INSERT INTO myuserbase(username,password,usertoken)
-        SELECT 'test','test','1'
-        WHERE NOT EXISTS (SELECT 1 FROM myuserbase WHERE username='test')
-    """)
-    cur.connection.commit()
-
-
 
 @app.teardown_appcontext
 def close_connection(exception):
@@ -44,16 +38,21 @@ def login():
             user = request.form['UserName']
             password = request.form['Pass']
             cur = get_db()
+            print("checking username")
             user_check = cur.execute(f"SELECT usertoken FROM myuserbase WHERE username=?AND password=?",(user,password)) # I have changed this to make sure that a sql injection doesnt break it.
             cur.connection.commit()
-            if user_check.fetchone() is None:
+            token_fetch_result = user_check.fetchone()
+            if token_fetch_result is None:
+                print("gone into token fetch none")
                 return redirect( request.host_url + url_for("login"), code = 403)
             else:
-                return redirect(f"/comment?token={user_check.fetchone()}")
-        elif "reset_pass" in request.form():
-            pass
+                print("it should work??")
+                session["usertoken"] = token_fetch_result[0]
+                return redirect(url_for("comment"))
+        elif "reset_pass" in request.form:
+            return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
-        elif "new_user" in request.form():
+        elif "new_user" in request.form:
             return redirect(url_for("new_user"))
     return render_template("login.html")
 
@@ -86,9 +85,7 @@ def new_user():
             if not token_check.fetchone():
                 usertokenholder = True
         cur = get_db()
-        cur.execute("""INSERT INTO myuserbase(username,password,usertoken)
-        SELECT username=?,password=?,usertoken=?
-        """, (username,pass1,usertoken))
+        cur.execute("INSERT INTO myuserbase(username,password,usertoken) VALUES (?,?,?)", (username,pass1,usertoken))
         cur.connection.commit()
         return redirect(url_for("login"))
     else:
@@ -96,24 +93,67 @@ def new_user():
 
 @app.route("/comment", methods = ["POST", "GET"])
 def comment():
-    if request.method == "POST":
-        cur = get_db()
-        cur.execute("SELECT * FROM comments ORDER BY datetime ASC")
-        fetched_data = cur.fetchall()
-        current_comments = fetched_data
-        current_user = request.args.get("token","")
+    ban_list = ["mrlomax","s"]
+    now = dt.now()
+    if not session.get("usertoken"):
+        print("no session")
+        return redirect("/login")
+    cur = get_db()
+    if request.method == "POST" and request.form["newpost"] != "":
+        current_user = session.get("usertoken")
         user_input = request.form["newpost"]
-        now = dt.now()
-        cur.execute("""INSERT INTO comments
-                    VALUES (?,?,?)""", (current_user,user_input,now))
-        cur.connection.commit()
-        return render_template("mainpage.html", comment = current_comments)
+        
+        if current_user != None:
+            cur.execute("""INSERT INTO comments
+                        VALUES (?,?,?)""", (current_user,user_input,now))
+            cur.connection.commit()
     else:
-        cur = get_db()
-        cur.execute("SELECT * FROM comments ORDER BY datetime ASC")
-        fetched_data = cur.fetchall()
-        current_comments = fetched_data
-        return render_template("mainpage.html", comment = current_comments)
+        try:
+            current_user = session.get("usertoken")
+        except UnboundLocalError:
+            current_user = ""
+    cur.execute("SELECT * FROM comments WHERE datetime BETWEEN ? AND ? ORDER BY datetime ASC",(f"{now - datetime.timedelta(minutes=3)}", f"{now}"))
+    fetched_data = cur.fetchall()
+    current_comments = fetched_data
+    sent_comments = []
+    for i in range(0,len(current_comments)):
+        tokenID = current_comments[i][0]
+        user_check_comments = cur.execute("""SELECT username FROM myuserbase WHERE usertoken=?""",(tokenID,))
+        try:
+            user_fetched_name = user_check_comments.fetchone()[0]
+        except BaseException:
+            user_fetched_name = ""
+        _current_comment = current_comments[i][1]
+        if "body" in _current_comment or "href" in _current_comment or "<script" in _current_comment or "style" in _current_comment or "jpg" in _current_comment or user_fetched_name in ban_list:
+            _current_comment = '<b style="color:yellow;">EXPLICIT - This User is a Bad Person GO AWAY </b><img src="/static/images/bad.jpg" alt="bad" style="height: 7%; width: 7%; align-content: right;">'
+        user_current_comment_time = current_comments[i][2]
+        str_user_current_comment_time = str(user_current_comment_time)
+        split_str_time = str_user_current_comment_time[10:19]
+        try:
+            if tokenID == current_user and _current_comment != current_comments[i-1][1]:
+                sent_comments.append(f'<p style="color: white;"><b>{split_str_time} | You: </b>{_current_comment} </p>')
+            elif _current_comment != current_comments[i-1][1]:
+                sent_comments.append(f"<p><b>{split_str_time} | {user_fetched_name}: </b>{_current_comment} </p>")
+            else:
+                pass
+        except BaseException:
+            sent_comments.append(f"<p><b>{split_str_time} | {user_fetched_name}: </b>{_current_comment} </p>")
+    if current_user != "":
+        try:
+            username_check = cur.execute("SELECT username FROM myuserbase WHERE usertoken=?",(current_user,))
+            username_current = username_check.fetchone()[0]
+        except TypeError:
+            username_current = ""
+    else:
+        username_current = ""
+    return render_template("mainpage.html", comment = sent_comments, username=username_current)
+
+@app.route("/logout",methods=["POST"])
+def logout():
+    print("gone into logout")
+    session.pop("usertoken",None)
+    return redirect(url_for("login"))
+    
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=420, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

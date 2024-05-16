@@ -2,13 +2,78 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Post Page</title>
+        <meta http-equiv="refresh" content="3"> 
+        <link rel="stylesheet" href="/static/css/style.css"/>
+        <title>AbingChat Chat Page</title>
+        <script type="text/javascript">
+            window.onload = function() {
+                window.scrollTo(0,document.body.scrollHeight);
+            }
+        </script>
+        <script type="text/javascript">
+            window.onload = function() {
+                if (typeof(Storage) !== "undefined") {
+                    var input = document.querySelector('input[name="newpost"]');
+                    input.value = localStorage.getItem('newpost') || '';
+                    input.oninput = function() {
+                        localStorage.setItem('newpost', input.value);
+                    };
+                    input.addEventListener('keydown', function(event) {
+                        if (event.keyCode === 13) {
+                            localStorage.removeItem('newpost');
+                        }
+                    });
+                }
+            };
+        </script>
     </head>
     <body>
-        <form action = "/comment" method = "post">
-            <p> {{comment}}</p>
-            <p><input type = "text" name = "newpost" /></p>
-            <p><input type = "submit" name = "enter" value = "submit" /></p>
-       </form>   
+        <style>
+            .header {
+                position: fixed;
+                top:0;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;   
+                background-color: #de3163;
+                padding: 20px;
+                color: white;
+                text-align: center; 
+                z-index: 1;        
+            }
+            h1 {
+                text-align: left;
+            }
+            h2{
+                font-size: 0.75em;
+                padding-right: 10px;
+            }
+
+            .form{
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+            }
+        </style>
+
+        <div class="header">
+            <img src="/static/images/dinghy.jpg" alt="Abingdon_Logo" style="height: 7%; width: 7%; align-content: left;">
+            <h1>AbingChat</h1>
+            <h2>You are logged in as {{username}}</h2>
+            <form action="/logout" method="post">
+                <input type="submit" value="logout" style="color: black; padding-right: 60px;">
+            </form>
+        </div>
+
+        <div class="form">
+            <form action = "/comment" method = "post">
+                <p> {%for c in comment%}
+                    {{c|safe}}
+                {%endfor%}</p>
+                <p><input type = "text" name = "newpost" style="width: 100%;" color="#de3163" autofocus/></p>
+                
+            </form>
+        </div> 
     </body>
 </html>

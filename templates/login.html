@@ -3,16 +3,50 @@
     <head>
         <meta charset="UTF-8">
         <title>Login Page</title>
+        <link rel="stylesheet" href="/static/css/style.css"/>
     </head>
     <body>
-        <form action = "/login" method = "post">
-            <p>Enter UserName:</p>
-            <p><input type = "text" name = "UserName" /></p>
-            <p> Enter Password:</p>
-            <p><input type = "password" name = "Pass" /></p>
-            <p><input type = "submit" name = "enter" value = "submit" /></p>
-            <p> <input type  = "submit" name = "reset_pass" value = "Help I've forgotten my password!" /></p>
-            <p> <input type = "submit" name = "new_user" value="Create a new account"/></p>
-        </form>   
+        <style>
+            .header {
+                position: fixed;
+                top:0;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;   
+                background-color: #de3163;
+                padding: 20px;
+                color: white;
+                text-align: center;         
+            }
+            h1 {
+                text-align: center;
+            }
+
+            .form {
+                position: fixed;
+                top: 40%;
+                left: 40%;
+                width: 80%;
+                height: 80%;
+    
+            }
+        </style>
+
+        <div class="header">
+            <h1>AbingChat</h1>
+        </div>
+
+        <div class = "form">
+            <form action = "/login" method = "post">
+                <p>Enter UserName:</p>
+                <p><input type = "text" name = "UserName" color="#de3163" autofocus/></p>
+                <p> Enter Password:</p>
+                <p><input type = "password" name = "Pass" color="#de3163"/></p>
+                <p><input type = "submit" name = "enter" value = "submit" color="#de3163"/></p>
+                <p> <input type  = "submit" name = "reset_pass" value = "Help I've forgotten my password!" color="#de3163"/></p>
+                <p> <input type = "submit" name = "new_user" value="Create a new account" color="#de3163"/></p>
+            </form>  
+        </div>  
     </body>
 </html>

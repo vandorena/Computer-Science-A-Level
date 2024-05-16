@@ -1,0 +1,21 @@
+%! PS
+
+
+
+/triangle{
+    /xcenter exch def
+    /ycenter exch def
+    /radius exch def
+
+    newpath
+    100 100 100 0 360 arc
+    stroke
+
+    %newpath
+    %ycenter radius sub
+
+
+
+} def
+5 100 100 triangle
+showpage

@@ -1,5 +1,7 @@
 import random
 import os
+import datetime
+
 def Main():
     ThisGame = Breakthrough()
     ThisGame.PlayGame()
@@ -20,10 +22,23 @@ class Breakthrough():
         self.__LoadLocks()
         self.__MulliganUsed = False
     
-    def test(self):
-        self.__SetupGame()
-        print(self.__CurrentLock.FormatChallenges())
-        print(self.__CurrentLock.FormatChallengesMet())
+    def FindDate(self):
+        date = str(datetime.datetime.now())
+        date = date.replace(" ","_")
+        date = date.replace(":","-")
+        date = date[:-7]
+        return date
+    
+    def SaveGame(self):
+        file = open(f"SaveGame{self.FindDate()}.txt","x")
+        file.write(f"{self.__Score} \n")
+        file.write(f"{self.__CurrentLock.FormatChallenges()} \n")
+        file.write(f"{self.__CurrentLock.FormatChallengesMet()} \n" )
+        file.write(f"{self.__Deck.FormatCards()} \n")
+        file.write(f"{self.__Hand.FormatCards()} \n")
+        file.write(f"{self.__Discard.FormatCards()} \n")
+        file.close()
+        return 
 
     def PlayGame(self):
         if len(self.__Locks) > 0:
@@ -39,6 +54,8 @@ class Breakthrough():
                     MenuChoice = self.__GetChoice()
                     if MenuChoice == "D":
                         print(self.__Discard.GetCardDisplay())
+                    elif MenuChoice == "S":
+                        self.SaveGame()
                     elif MenuChoice =="Q":
                         print("Bye Bye")
                         print(f"Your Score is {self.__Score + self.__Deck.GetNumberOfCards()}")
@@ -260,9 +277,9 @@ class Breakthrough():
     def __GetChoice(self):
         print()
         if self.__MulliganUsed:
-            Choice = input("(D)iscard inspect, (U)se card:> ").upper()
+            Choice = input("(D)iscard inspect, (U)se card, (S)ave Game:> ").upper()
         else:
-            Choice = input("(D)iscard inspect, (U)se card, (M)ulligan:> ").upper()
+            Choice = input("(D)iscard inspect, (U)se card, (M)ulligan, (S)ave Game:> ").upper()
         return Choice
     
     def __AddDifficultyCardsToDeck(self):
@@ -375,9 +392,11 @@ class Lock():
 
     def FormatChallengesMet(self):
         string = ""
-        for c in self._Challenges:
+        for c in range(0,len(self._Challenges)):
             string +=  str(self._Challenges[c].GetMet())[0] + ";"
-        string = string[::-1]
+        string = string[:-1]
+        string = string.replace("T", "Y")
+        string = string.replace("F","N")
         return string
     
     def GetChallengeMet(self, Pos): 
@@ -495,7 +514,7 @@ class CardCollection():
     def FormatCards(self):
         string = ""
         for c in self._Cards:
-            string += ",".join(c.GetDescription())+";"
+            string += "".join(c.GetDescription())+";"
         string = string[:-1]
         return string
 

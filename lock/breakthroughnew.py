@@ -4,6 +4,8 @@ def Main():
     ThisGame = Breakthrough()
     ThisGame.PlayGame()
 
+
+        
 class Breakthrough():
     def __init__(self):
         self.__Deck = CardCollection("DECK")
@@ -18,7 +20,10 @@ class Breakthrough():
         self.__LoadLocks()
         self.__MulliganUsed = False
     
-    
+    def test(self):
+        self.__SetupGame()
+        print(self.__CurrentLock.FormatChallenges())
+        print(self.__CurrentLock.FormatChallengesMet())
 
     def PlayGame(self):
         if len(self.__Locks) > 0:
@@ -56,6 +61,7 @@ class Breakthrough():
                         self.__GameOver = True
                         self.__ProcessLockSolved()
                     self.__Deck.AllProbabilityState()
+                    print(self.__CurrentLock.FormatChallenges())
                 self.__GameOver = self.__CheckIfPlayerHasLost()
         else:
             print("No locks in file.")
@@ -324,6 +330,15 @@ class Lock():
         C.SetCondition(Condition)
         self._Challenges.append(C)
 
+    def FormatChallenges(self):
+        string = ""
+        for i in range(0,len(self._Challenges)):
+            for j in range(0,len(self._Challenges[i].GetCondition())):
+                string += f"{self._Challenges[i].GetCondition()[j]},"
+            string == f";"
+        string = string[:-1]
+        return string
+
     def __ConvertConditionToString(self, C):
         ConditionAsString = ""
         for Pos in range(0, len(C) - 1):
@@ -357,6 +372,13 @@ class Lock():
 
     def SetChallengeMet(self, Pos, Value):
         self._Challenges[Pos].SetMet(Value)
+
+    def FormatChallengesMet(self):
+        string = ""
+        for c in self._Challenges:
+            string +=  str(self._Challenges[c].GetMet())[0] + ";"
+        string = string[::-1]
+        return string
     
     def GetChallengeMet(self, Pos): 
         return self._Challenges[Pos].GetMet()
@@ -470,6 +492,12 @@ class CardCollection():
             self._NumKeys -= 1
         return
 
+    def FormatCards(self):
+        string = ""
+        for c in self._Cards:
+            string += ",".join(c.GetDescription())+";"
+        string = string[:-1]
+        return string
 
     def NumberState(self,x):
         cardsInState = 0
@@ -486,14 +514,13 @@ class CardCollection():
     
     def ProbabilityState(self,x):
         numerator = self.NumberState(x)
+        result = 0
         if x == "X" and self._starterX != 0:
             result = (numerator / self._starterX)*100
         elif x == "Y" and self._starterY != 0:
             result = (numerator / self._starterY)*100
         elif x == "Z" and self._starterZ != 0:
             result = (numerator / self._starterZ)*100
-        if result == None:
-            result = "N/A"
         string_result = f"The Percentage of getting a {x} cards remaining is {result:.1f}%"
         return string_result
     

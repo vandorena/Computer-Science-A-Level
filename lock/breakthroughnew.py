@@ -21,16 +21,18 @@ class Breakthrough():
         self.__LockSolved = False
         self.__LoadLocks()
         self.__MulliganUsed = False
+        self.__SaveCount = 1
     
     def FindDate(self):
         date = str(datetime.datetime.now())
         date = date.replace(" ","_")
         date = date.replace(":","-")
-        date = date[:-7]
+        date = date[:-16]
+        self.__SaveCount+=1
         return date
     
     def SaveGame(self):
-        file = open(f"SaveGame{self.FindDate()}.txt","x")
+        file = open(f"{self.FindDate()}{self.__SaveCount}.txt","x")
         file.write(f"{self.__Score} \n")
         file.write(f"{self.__CurrentLock.FormatChallenges()} \n")
         file.write(f"{self.__CurrentLock.FormatChallengesMet()} \n" )
@@ -220,7 +222,15 @@ class Breakthrough():
             return False
 
     def __LoadLocks(self):
-        FileName = "locks.txt"
+        choiceholder = False
+        while not choiceholder:
+            choice = input("Enter the name of the file you want to load from: ")
+            if choice[-4:] == ".txt":
+                choiceholder = True
+            else:
+                print("You forgot to add the .txt extension, try again")
+                print("")
+        FileName = choice
         self.__Locks = []
         try:
             with open(FileName) as f: 

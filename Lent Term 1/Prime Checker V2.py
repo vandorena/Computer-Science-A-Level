@@ -15,10 +15,10 @@ def number_checker(input_number):
 
 holder = False
 while not holder:
-    user_input_boundary = int(input("Input a upper boundary to find all the primes from 1 to it: "))#
     prime_list = []
-    for i in range(1,user_input_boundary):
-        if number_checker(i) == False:
-            prime_list.append(i)
-
-    print(prime_list)
+    count = 4
+    while len(prime_list) != 10001:
+        if number_checker(count) == False:
+            prime_list.append(count)
+        count +=1 
+        print((prime_list.sort(reverse=True)))
